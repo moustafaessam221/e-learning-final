@@ -1,8 +1,18 @@
 import React from 'react'
+import InvestComponent from '../FixedComponent/InvestComponent'
+import TopCourses from '../components/TopCourses'
+import HeroSection from '../FixedComponent/HeroSection'
+import Slider from '../FixedComponent/Slider'
 
 function Home() {
   return (
-    <h1>Home Page</h1>
+    <>
+    <Slider />
+    <HeroSection />
+   <TopCourses />
+   <InvestComponent />
+    
+    </>
   )
 }
 
