@@ -9,7 +9,6 @@ function NewestCourses() {
   const { courses } = useContext(CoursesContext);
   const [newestCourses, setNewestCourses] = useState([]);
 
-  console.log(courses);
   useEffect(() => {
     if (!courses) return;
     const sortedCourses = [...courses].sort(
@@ -28,7 +27,6 @@ function NewestCourses() {
     });
   }
 
-  console.log(newestCourses);
 
   return (
     <Container fluid className="mt-5 p-0">

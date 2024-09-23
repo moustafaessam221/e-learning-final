@@ -38,7 +38,6 @@ function CourseDetails() {
                 setRating(data.rating);
                 setPrice(data.price);
                 setViews(data.views);
-                console.log(data);
             }
         }
 
