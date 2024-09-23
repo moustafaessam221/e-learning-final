@@ -1,80 +1,50 @@
 import React from 'react';  
-import { Link } from 'react-router-dom';  
-import SearchBar from './Search';  
+import { LinkContainer } from 'react-router-bootstrap';  // Helps integrate react-router with react-bootstrap
+import { Navbar, Nav, Container, Button } from 'react-bootstrap';  
+import SearchBar from './Search';  // Custom SearchBar component
 
 const Navigationbar = () => {  
   return (  
-    <nav className="navbar navbar-expand-lg" style={{ backgroundColor: '#004085' }}> {/* Dark Blue Background */}  
-      <div className="container-fluid">  
-        {/* Brand Section */}
-        <Link to="/" className="navbar-brand text-white" style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>EduSpace</Link>  
+    <Navbar bg="primary" variant="dark" expand="lg" className="py-3">  
+      <Container fluid>  
+        {/* Brand Section */}  
+        <LinkContainer to="/">  
+          <Navbar.Brand style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>EduSpace</Navbar.Brand>  
+        </LinkContainer>  
 
-        {/* Toggler for Small Screens */}
-        <button 
-          className="navbar-toggler" 
-          type="button" 
-          data-bs-toggle="collapse" 
-          data-bs-target="#navbarSupportedContent" 
-          aria-controls="navbarSupportedContent" 
-          aria-expanded="false" 
-          aria-label="Toggle navigation"
-          style={{ borderColor: '#fff' }}
-        >  
-          <span className="navbar-toggler-icon"></span>  
-        </button>  
+        {/* Toggler for Small Screens */}  
+        <Navbar.Toggle aria-controls="navbarScroll" />  
 
-        {/* Centered Search Bar */}
-        <div className="collapse navbar-collapse justify-content-center">  
-          <SearchBar />  
-        </div>  
+        {/* Navbar Content */}  
+        <Navbar.Collapse id="navbarScroll">  
+          <Nav className="ms-auto my-2 my-lg-0" navbarScroll>  
+            <LinkContainer to="/">  
+              <Nav.Link className="text-white" style={{ transition: 'color 0.3s ease' }}>Home</Nav.Link>  
+            </LinkContainer>  
+            <LinkContainer to="/about">  
+              <Nav.Link className="text-white" style={{ transition: 'color 0.3s ease' }}>About</Nav.Link>  
+            </LinkContainer>  
+            <LinkContainer to="/courses">  
+              <Nav.Link className="text-white" style={{ transition: 'color 0.3s ease' }}>Courses</Nav.Link>  
+            </LinkContainer>  
+            <LinkContainer to="/profile">  
+              <Nav.Link className="text-white" style={{ transition: 'color 0.3s ease' }}>Profile</Nav.Link>  
+            </LinkContainer>  
+            <LinkContainer to="/contact">  
+              <Nav.Link className="text-white" style={{ transition: 'color 0.3s ease' }}>Contact</Nav.Link>  
+            </LinkContainer>  
+          </Nav>  
 
-        {/* Right-Aligned Links */}
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">  
-          <ul className="navbar-nav ms-auto">  
-            <li className="nav-item">  
-              <Link to="/" className="nav-link text-white" style={{ padding: '10px', transition: 'color 0.3s ease' }}
-                onMouseEnter={(e) => e.target.style.color = '#F2613F'}
-                onMouseLeave={(e) => e.target.style.color = '#fff'}
-              >
-                Home
-              </Link>  
-            </li>  
-            <li className="nav-item">  
-              <Link to="/about" className="nav-link text-white" style={{ padding: '10px', transition: 'color 0.3s ease' }}
-                onMouseEnter={(e) => e.target.style.color = '#F2613F'}
-                onMouseLeave={(e) => e.target.style.color = '#fff'}
-              >
-                About
-              </Link>  
-            </li>  
-            <li className="nav-item">  
-              <Link to="/courses" className="nav-link text-white" style={{ padding: '10px', transition: 'color 0.3s ease' }}
-                onMouseEnter={(e) => e.target.style.color = '#F2613F'}
-                onMouseLeave={(e) => e.target.style.color = '#fff'}
-              >
-                Courses
-              </Link>  
-            </li>  
-            <li className="nav-item">  
-              <Link to="/profile" className="nav-link text-white" style={{ padding: '10px', transition: 'color 0.3s ease' }}
-                onMouseEnter={(e) => e.target.style.color = '#F2613F'}
-                onMouseLeave={(e) => e.target.style.color = '#fff'}
-              >
-                Profile
-              </Link>  
-            </li>  
-            <li className="nav-item">  
-              <Link to="/contact" className="nav-link text-white" style={{ padding: '10px', transition: 'color 0.3s ease' }}
-                onMouseEnter={(e) => e.target.style.color = '#F2613F'}
-                onMouseLeave={(e) => e.target.style.color = '#fff'}
-              >
-                Contact
-              </Link>  
-            </li>  
-          </ul>  
-        </div>  
-      </div>  
-    </nav>  
+          {/* Centered Search Bar */}  
+          <div className="d-flex justify-content-center mx-auto">  
+            <SearchBar />  
+          </div>  
+
+          {/* Right-aligned Links or Buttons (optional) */}
+          <Button variant="outline-light" className="ms-lg-2">Login</Button>
+        </Navbar.Collapse>  
+      </Container>  
+    </Navbar>  
   );  
 };  
 
