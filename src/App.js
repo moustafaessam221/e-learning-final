@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import { CoursesContext } from "./store/CourseContext";
 import CourseDetails from "./components/CourseDetails";
+import Navigationbar from "./FixedComponent/Navbar";
 
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
     <>
       <CoursesContext.Provider value={{ courses, fetchError }}>
         <BrowserRouter>
+        <Navigationbar />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="courses" element={<Courses />} />
