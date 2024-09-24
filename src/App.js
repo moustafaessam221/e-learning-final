@@ -8,6 +8,8 @@ import Profile from "./pages/Profile";
 import { CoursesContext } from "./store/CourseContext";
 import CourseDetails from "./components/CourseDetails";
 import Navigationbar from "./FixedComponent/Navbar";
+import Footer from "./components/Footer";
+import PricingCard from './pages/Pricing'
 
 
 function App() {
@@ -41,7 +43,9 @@ function App() {
             <Route path="courses" element={<Courses />} />
             <Route path="profile" element={<Profile />} />
             <Route path="courses/:id" element={<CourseDetails />} />
+            <Route path="price" element={<PricingCard />} />
           </Routes>
+          <Footer />
         </BrowserRouter>
       </CoursesContext.Provider>
     </>

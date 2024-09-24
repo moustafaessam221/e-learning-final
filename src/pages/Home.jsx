@@ -4,6 +4,7 @@ import TopCourses from '../components/TopCourses'
 import HeroSection from '../FixedComponent/HeroSection'
 import Slider from '../FixedComponent/Slider'
 import NewestCourses from '../components/NewestCourses'
+import Testimonials from '../FixedComponent/Testimonials'
 
 function Home() {
   return (
@@ -13,6 +14,7 @@ function Home() {
    <TopCourses />
    <InvestComponent />
     <NewestCourses />
+    <Testimonials />
     </>
   )
 }
