@@ -70,7 +70,7 @@ const ContactUs = () => {
           <h2>Contact Information</h2>
           <p>Email: edu-space1@gmail.com</p>
           <p>Phone: +123 456 7890</p>
-          <p>Address: 123 Main Street, Roshdy, Alexandria,cd path/to/your/project
+          <p>Address: 123 Main Street, Roshdy, Alexandria, 
  Egypt</p>
           <div style={{ height: '300px' }}>
             <iframe
