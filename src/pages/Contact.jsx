@@ -18,7 +18,6 @@ const ContactUs = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('Form Submitted:', formData);
-    // يمكنك هنا إرسال البيانات إلى سيرفر أو API
   };
 
   return (
@@ -69,11 +68,20 @@ const ContactUs = () => {
         </Col>
         <Col md={6}>
           <h2>Contact Information</h2>
-          <p>Email: info@example.com</p>
+          <p>Email: edu-space1@gmail.com</p>
           <p>Phone: +123 456 7890</p>
-          <p>Address: 123 Main Street, City, Country</p>
-          <div className="map-placeholder" style={{ height: '300px', background: '#f0f0f0' }}>
-            <p className="text-center mt-5">Map Placeholder</p>
+          <p>Address: 123 Main Street, Roshdy, Alexandria,cd path/to/your/project
+ Egypt</p>
+          <div style={{ height: '300px' }}>
+            <iframe
+              title="Google Map of Alexandria"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3454.1183298146945!2d31.215640715383637!3d31.215888681422027!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x145840c77a4c8e09%3A0xe20c4bc80f57e7d4!2sBibliotheca%20Alexandrina!5e0!3m2!1sen!2seg!4v1695565795924!5m2!1sen!2seg"
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              allowFullScreen
+              loading="lazy"
+            />
           </div>
         </Col>
       </Row>
