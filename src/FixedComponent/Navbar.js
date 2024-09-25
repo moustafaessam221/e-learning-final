@@ -63,9 +63,14 @@ const Navigationbar = () => {
             <SearchBar />
           </div>
 
-          <Button variant="outline-light" className="ms-lg-2">
-            Login
-          </Button>
+          <LinkContainer to="/login">
+            <Nav.Link
+              className="text-white mx-4"
+              style={{ transition: "color 0.3s ease" }}
+            >
+              Login
+            </Nav.Link>
+          </LinkContainer>
         </Navbar.Collapse>
       </Container>
     </Navbar>

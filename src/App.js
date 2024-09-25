@@ -9,8 +9,9 @@ import { CoursesContext } from "./store/CourseContext";
 import CourseDetails from "./components/CourseDetails";
 import Navigationbar from "./FixedComponent/Navbar";
 import Footer from "./components/Footer";
-import PricingCard from './pages/Pricing'
-
+import PricingCard from "./pages/Pricing";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 
 function App() {
   const [courses, setCourses] = useState(null);
@@ -37,10 +38,12 @@ function App() {
     <>
       <CoursesContext.Provider value={{ courses, fetchError }}>
         <BrowserRouter>
-        <Navigationbar />
+          <Navigationbar />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="courses" element={<Courses />} />
+            <Route path="login" element={<Login />} />
+            <Route path="signup" element={<Signup />} />
             <Route path="profile" element={<Profile />} />
             <Route path="courses/:id" element={<CourseDetails />} />
             <Route path="price" element={<PricingCard />} />
