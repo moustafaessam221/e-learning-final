@@ -13,6 +13,7 @@ import PricingCard from "./pages/Pricing";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import ContactUs from './pages/ContactUs';
+import AboutUs from './pages/AboutUs';
 
 
 function App() {
@@ -50,6 +51,7 @@ function App() {
             <Route path="courses/:id" element={<CourseDetails />} />
             <Route path="price" element={<PricingCard />} />
             <Route path="/contact" element={<ContactUs />} />
+            <Route path="/about" element={<AboutUs />} />
 
           </Routes>
           <Footer />
