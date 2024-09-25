@@ -12,6 +12,8 @@ import Footer from "./components/Footer";
 import PricingCard from "./pages/Pricing";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import ContactUs from './pages/ContactUs';
+
 
 function App() {
   const [courses, setCourses] = useState(null);
@@ -47,6 +49,8 @@ function App() {
             <Route path="profile" element={<Profile />} />
             <Route path="courses/:id" element={<CourseDetails />} />
             <Route path="price" element={<PricingCard />} />
+            <Route path="/contact" element={<ContactUs />} />
+
           </Routes>
           <Footer />
         </BrowserRouter>
