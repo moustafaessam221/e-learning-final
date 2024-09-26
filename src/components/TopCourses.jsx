@@ -18,7 +18,7 @@ function TopCourses() {
   }, [courses]);
 
   return (
-    <Container fluid className="mt-5 p-0">
+    <Container fluid className="my-5 p-0 ">
       <div className="px-5 d-flex justify-content-between w-100">
       <h2>Top-Picked Courses</h2>
       <Button variant="link">See more</Button>

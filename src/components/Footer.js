@@ -1,28 +1,54 @@
-
-import React from 'react';
-import { Container, Row, Col, Form, Button } from 'react-bootstrap';
-import EduSpaceLogo from '../images/EduSpaceLogo.png'
-import { faGithub, faFacebook, faInstagram, faLinkedin } from '@fortawesome/free-brands-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
+import {
+  faFacebook,
+  faLinkedin,
+  faXTwitter,
+} from "@fortawesome/free-brands-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React from "react";
+import { Button, Col, Container, Form, Nav, Row } from "react-bootstrap";
+import EduSpaceLogo from "../images/EduSpaceLogo.png";
+import { Link } from "react-router-dom";
+import { useMediaQuery } from "usehooks-ts";
 
 function Footer() {
-  
+  const isMobile = useMediaQuery("(max-width: 768px)");
+
   return (
-    <footer className="bg-dark text-white pt-3 pb-3 mt-20">
+    <footer className="bg-dark text-white pt-5 pb-3 mt-5">
       <Container>
-        <Row>
-          <Col>
+        <Row className=" flex-wrap">
+          <Col className="p-20 mx-4 mb-3" style={{ minWidth: "200px" }}>
            <div>
            <img
-           className='logo'
+           className='footer-logo mx-3'
             src={EduSpaceLogo}
+            alt="EduSpace Logo"
           />
-            <h1 className="mt-2">Eduspace</h1>
            </div>
+            <div className='mt-4'>
+              <a href="#" className="text-white me-3">
+                <FontAwesomeIcon icon={faXTwitter} size="2x" />
+              </a>
+              <a href="#" className="text-white me-3">
+                <FontAwesomeIcon icon={faFacebook} size="2x" />
+              </a>
+              <a href="#" className="text-white">
+                <FontAwesomeIcon icon={faLinkedin} size="2x" />
+              </a>
+            </div>
           </Col>
-          <Col className="p-20 mx-4">
-            <h5>Contact</h5>
+          {isMobile ? (
+            null
+          ): (
+            <Col  style={{ minWidth: "200px" }} xs={12} md={3}>
+            <h5>EduSpace</h5>
+            <Nav.Link as={Link} to="/about">About</Nav.Link>
+            <Nav.Link as={Link} to="/contact">Contact</Nav.Link>
+            <Nav.Link as={Link} to="/">Home</Nav.Link>
+          </Col>
+          )}
+          <Col className="p-20 mx-4" style={{ minWidth: "200px" }}>
+            <h5 className="mb-3">Contact us</h5>
             <Form>
               <Form.Group controlId="formEmail">
                 <Form.Label>Email</Form.Label>
@@ -42,23 +68,6 @@ function Footer() {
               <Button type="submit" className="mt-2">Submit</Button>
             </Form>
           </Col>
-          <Col className="p-20" >
-            <h5>About</h5>
-            <div>
-              <a href="#" className="text-white me-3">
-                <FontAwesomeIcon icon={faGithub} size="2x" />
-              </a>
-              <a href="#" className="text-white me-3">
-                <FontAwesomeIcon icon={faFacebook} size="2x" />
-              </a>
-              <a href="#" className="text-white me-3">
-                <FontAwesomeIcon icon={faInstagram} size="2x" />
-              </a>
-              <a href="#" className="text-white">
-                <FontAwesomeIcon icon={faLinkedin} size="2x" />
-              </a>
-            </div>
-          </Col>
         </Row>
       </Container>
       <div className="text-center mt-4">
@@ -67,5 +76,4 @@ function Footer() {
     </footer>
   );
 }
-
 export default Footer;
