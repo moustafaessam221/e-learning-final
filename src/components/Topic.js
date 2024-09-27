@@ -1,22 +1,59 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Dropdown } from "react-bootstrap";
+import { useContext } from "react";
+import { CoursesContext } from "../store/CourseContext";
 
-function Topic( { handleSelect, selectCategory } ) {
+function Topic({ handleSelect, selectCategory, handlePrice }) {
+  const [coursesCategories, setCoursesCategories] = useState([]);
+
+  const { courses } = useContext(CoursesContext);
+
+  function removeDuplicates(arr) {
+    return arr.filter((item, index) => arr.indexOf(item) === index);
+  }
+
+  useEffect(() => {
+    const categories = courses.map((course) => course.category);
+    const filteredCategories = categories.filter(
+      (category) => category !== null
+    );
+    const flatCategories = filteredCategories.flat();
+    const uniqueCategories = removeDuplicates(flatCategories);
+    setCoursesCategories(uniqueCategories);
+    console.log(uniqueCategories);
+  }, [courses]);
 
   return (
-    <Dropdown onSelect={(eventKey) => handleSelect(eventKey)}>
-      <Dropdown.Toggle variant="success" id="dropdown-basic">
-        {selectCategory}
-      </Dropdown.Toggle>
+    <>
+      {/* Category Dropdown */}
+      <Dropdown onSelect={(eventKey) => handleSelect(eventKey)}>
+        <Dropdown.Toggle variant="success" id="dropdown-basic">
+          {selectCategory}
+        </Dropdown.Toggle>
 
-      <Dropdown.Menu>
-        <Dropdown.Item eventKey="ALL">All</Dropdown.Item>
-        <Dropdown.Item eventKey="Design">Design</Dropdown.Item>
-        <Dropdown.Item eventKey="Marketing">Marketing</Dropdown.Item>
-        <Dropdown.Item eventKey="Frontend">Frontend</Dropdown.Item>
-        <Dropdown.Item eventKey="Backend">Backend</Dropdown.Item>
-      </Dropdown.Menu>
-    </Dropdown>
+        <Dropdown.Menu>
+          <Dropdown.Item eventKey="ALL">ALL</Dropdown.Item>
+          {coursesCategories.map((category) => (
+            <Dropdown.Item key={category} eventKey={category}>
+              {category}
+            </Dropdown.Item>
+          ))}
+        </Dropdown.Menu>
+      </Dropdown>
+
+      {/* Price Dropdown */}
+      <Dropdown onSelect={(eventKey) => handlePrice(eventKey)}>
+        <Dropdown.Toggle variant="success" id="dropdown-basic">
+          Price
+        </Dropdown.Toggle>
+
+        <Dropdown.Menu>
+          <Dropdown.Item eventKey="All">All</Dropdown.Item>
+          <Dropdown.Item eventKey="Free">Free</Dropdown.Item>
+          <Dropdown.Item eventKey="Paid">Paid</Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
+    </>
   );
 }
 
