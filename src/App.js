@@ -14,13 +14,14 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import ContactUs from './pages/ContactUs';
 import AboutUs from './pages/AboutUs';
+import AddCoursePage from "./pages/AddCoursePage";
+
 
 
 function App() {
   const [courses, setCourses] = useState(null);
   const [fetchError, setFetchError] = useState(null);
 
-  // fetching the courses data
   useEffect(() => {
     const fetchCourses = async () => {
       const { data, error } = await supabase.from("courses").select();
@@ -52,6 +53,8 @@ function App() {
             <Route path="price" element={<PricingCard />} />
             <Route path="/contact" element={<ContactUs />} />
             <Route path="/about" element={<AboutUs />} />
+            <Route path="/add-course" element={<AddCoursePage/>} />
+
 
           </Routes>
           <Footer />
