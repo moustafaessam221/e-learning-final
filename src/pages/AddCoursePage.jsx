@@ -2,7 +2,7 @@ import React from 'react';
 import { Form, Button, Container, Row, Col, Dropdown } from 'react-bootstrap';
 
 const AddCoursePage = ({ instructorName }) => {
-  const categories = ['Backend', 'Web Development', 'Frontend'];
+  const categories = ['Backend', 'Web Development', 'Frontend', 'Design', 'UX Design', 'Visual Design', 'Node.js', 'Marketing', 'Social Media Marketing', 'Email Marketing', 'SEO', 'UI Design', 'Graphic Design' ];
   const [selectedCategory, setSelectedCategory] = React.useState(null);
 
   const handleSelect = (category) => {
