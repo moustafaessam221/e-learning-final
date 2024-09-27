@@ -19,7 +19,7 @@ import AddCoursePage from "./pages/AddCoursePage";
 
 
 function App() {
-  const [courses, setCourses] = useState(null);
+  const [courses, setCourses] = useState([]);
   const [fetchError, setFetchError] = useState(null);
 
   useEffect(() => {
@@ -33,6 +33,7 @@ function App() {
       if (data) {
         setCourses(data);
         setFetchError(null);
+        console.log(data)
       }
     };
     fetchCourses();

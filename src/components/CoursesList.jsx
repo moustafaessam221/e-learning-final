@@ -1,13 +1,38 @@
-import React from "react";
+import React, { useState, useContext, useEffect } from "react";
 import CoursesCard from "./CoursesCard";
 import { Container } from "react-bootstrap";
+import Topic from "./Topic";
+import { CoursesContext } from "../store/CourseContext";
 
-function CoursesList({ courses }) {
+function CoursesList() {
+  const { courses } = useContext(CoursesContext);
+  const [selectCategory, setSelectCategory] = useState("ALL");
+  const [filterCourses, setFilterCourses] = useState([]);
+
+  const handleSelect = (category) => {
+    setSelectCategory(category);
+  };
+
+  useEffect(() => {
+    const coursesAfterFiltring =
+      selectCategory === "ALL"
+        ? courses
+        : courses.filter(
+            (course) =>
+              course.category && course.category.includes(selectCategory)
+          );
+    setFilterCourses(coursesAfterFiltring);
+  }, [selectCategory, courses]);
+
   return (
     <>
       <Container className="d-flex flex-wrap">
-        {courses.map((course) => (
+        <Topic handleSelect={handleSelect} selectCategory={selectCategory} />
+      </Container>
+      <Container className="d-flex flex-wrap">
+        {filterCourses.map((course) => (
           <CoursesCard
+            key={course.id}
             id={course.id}
             title={course.title}
             description={course.shortDesc}
@@ -20,5 +45,4 @@ function CoursesList({ courses }) {
     </>
   );
 }
-
 export default CoursesList;
