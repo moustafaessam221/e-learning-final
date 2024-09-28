@@ -33,7 +33,6 @@ function App() {
       if (data) {
         setCourses(data);
         setFetchError(null);
-        console.log(data)
       }
     };
     fetchCourses();
