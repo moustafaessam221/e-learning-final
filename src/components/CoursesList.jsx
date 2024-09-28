@@ -9,6 +9,7 @@ function CoursesList() {
   const [selectCategory, setSelectCategory] = useState("ALL");
   const [coursesPrice, setCoursesPrice] = useState("All");
   const [filterCourses, setFilterCourses] = useState([]);
+  const [sortCriteria, setSortCriteria] = useState("Title"); 
 
   const handleSelect = (category) => {
     setSelectCategory(category);
@@ -18,27 +19,45 @@ function CoursesList() {
     setCoursesPrice(price);
   };
 
+  const handleSort = (criteria) => {
+    setSortCriteria(criteria);
+  };
+
   useEffect(() => {
+    let filteredCourses = [...courses]; 
+
     // Filter by category
-    const coursesAfterFiltering =
-      selectCategory === "ALL"
-        ? courses
-        : courses.filter(
-            (course) =>
-              course.category && course.category.includes(selectCategory)
-          );
+    if (selectCategory !== "ALL") {
+      filteredCourses = filteredCourses.filter(
+        (course) =>
+          course.category && course.category.includes(selectCategory)
+      );
+    }
 
     // Filter by price
-    const filteredCoursesByPrice =
-      coursesPrice === "Free"
-        ? coursesAfterFiltering.filter((course) => course.price === null)
-        : coursesPrice === "Paid"
-        ? coursesAfterFiltering.filter((course) => course.price > 0)
-        : coursesAfterFiltering; 
+    if (coursesPrice === "Free") {
+      filteredCourses = filteredCourses.filter((course) => course.price === null);
+    } else if (coursesPrice === "Paid") {
+      filteredCourses = filteredCourses.filter((course) => course.price > 0);
+    }
 
-    // Set filtered courses
-    setFilterCourses(filteredCoursesByPrice);
-  }, [selectCategory, courses, coursesPrice]); 
+    
+    if (sortCriteria === "Title") {
+      filteredCourses.sort((a, b) => a.title.localeCompare(b.title));
+    } else if (sortCriteria === "Price") {
+      filteredCourses.sort((a, b) => (a.price || 0) - (b.price || 0)); 
+    } else if (sortCriteria === "Rating") {
+      filteredCourses.sort((a, b) => b.rating - a.rating); 
+    }else if (sortCriteria === "Newest") {
+      filteredCourses.sort(
+        (a, b) => new Date(b.created_at) - new Date(a.created_at))
+    }else if (sortCriteria === "Top") {
+      filteredCourses.sort((a, b) => b.views - a.views)
+    }
+
+    
+    setFilterCourses(filteredCourses);
+  }, [selectCategory, courses, coursesPrice, sortCriteria]);
 
   return (
     <>
@@ -47,6 +66,7 @@ function CoursesList() {
           handleSelect={handleSelect}
           selectCategory={selectCategory}
           handlePrice={handlePrice}
+          handleSort={handleSort}
         />
       </Container>
       <Container className="d-flex flex-wrap">

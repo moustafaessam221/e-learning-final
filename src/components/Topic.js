@@ -3,7 +3,7 @@ import { Dropdown } from "react-bootstrap";
 import { useContext } from "react";
 import { CoursesContext } from "../store/CourseContext";
 
-function Topic({ handleSelect, selectCategory, handlePrice }) {
+function Topic({ handleSelect, selectCategory, handlePrice,handleSort }) {
   const [coursesCategories, setCoursesCategories] = useState([]);
 
   const { courses } = useContext(CoursesContext);
@@ -53,6 +53,22 @@ function Topic({ handleSelect, selectCategory, handlePrice }) {
           <Dropdown.Item eventKey="Paid">Paid</Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
+{/*sorted Dropdwon */}
+
+<Dropdown onSelect={(eventKey) => handleSort(eventKey)}>
+        <Dropdown.Toggle variant="success" id="dropdown-basic">
+          Sorted
+        </Dropdown.Toggle>
+
+        <Dropdown.Menu>
+          <Dropdown.Item eventKey="Title">title</Dropdown.Item>
+          <Dropdown.Item eventKey="Rating">rating</Dropdown.Item>
+          <Dropdown.Item eventKey="Newest">newest</Dropdown.Item>
+          <Dropdown.Item eventKey="Top">top</Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
+
+
     </>
   );
 }
