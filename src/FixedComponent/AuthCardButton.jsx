@@ -24,7 +24,7 @@ export default function AuthCardButton({
           <h6 className="text-center">
             {" "}
             <FontAwesomeIcon size="lg" icon={icon} className="mx-2" />{" "}
-            {description}{" "}
+            {description}
           </h6>
         </Card.Body>
       </Card>

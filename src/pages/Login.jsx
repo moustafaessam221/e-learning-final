@@ -1,20 +1,52 @@
 import React from "react";
 import { Card, Form, Alert, Button, Row, Col } from "react-bootstrap";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebookF, faGoogle } from "@fortawesome/free-brands-svg-icons";
 import AuthCardButton from "../FixedComponent/AuthCardButton";
+import supabase from "../config/supabaseClient";
 
 export default function Login() {
-  const emailRef = useRef(null);
-  const passwordRef = useRef(null);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [msg, setMsg] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!email || !password) {
+      setErrorMsg("Please fill all the fields");
+      return;
+    }
+
+    setLoading(true);
+    setErrorMsg("");
+    setMsg("");
+
+    try {
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (error) {
+        setErrorMsg(error.message);
+        setLoading(false);
+        return;
+      }
+
+      setMsg("Login successful!");
+      setLoading(false);
+      setEmail("");
+      setPassword("");
+      window.location.href = "/profile";
+    } catch (error) {
+      setErrorMsg("Something went wrong. Please try again.");
+      setLoading(false);
+    }
   };
 
   return (
@@ -30,7 +62,8 @@ export default function Login() {
                   <Form.Control
                     placeholder="name@email.com"
                     type="email"
-                    ref={emailRef}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     required
                   />
                 </Form.Group>
@@ -39,7 +72,8 @@ export default function Login() {
                   <Form.Control
                     placeholder="Enter Password"
                     type="password"
-                    ref={passwordRef}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     required
                   />
                 </Form.Group>

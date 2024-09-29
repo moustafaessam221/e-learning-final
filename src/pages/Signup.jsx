@@ -1,32 +1,60 @@
 import React from "react";
 import { Card, Form, Alert, Button, Row, Col } from "react-bootstrap";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import AuthCardButton from "../FixedComponent/AuthCardButton";
 import { faFacebookF, faGoogle } from "@fortawesome/free-brands-svg-icons";
+import supabase from "../config/supabaseClient";
 
 export default function Signup() {
-  const emailRef = useRef(null);
-  const nameRef = useRef(null);
-  const passwordRef = useRef(null);
-  const confirmPasswordRef = useRef(null);
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [msg, setMsg] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (
-      !passwordRef.current?.value ||
-      !emailRef.current?.value ||
-      !confirmPasswordRef.current?.value
-    ) {
+    if (!email || !password || !confirmPassword || !name) {
       setErrorMsg("Please fill all the fields");
       return;
     }
-    if (passwordRef.current.value !== confirmPasswordRef.current.value) {
-      setErrorMsg("Passwords doesn't match");
+
+    if (password !== confirmPassword) {
+      setErrorMsg("Passwords do not match");
       return;
+    }
+
+    setLoading(true);
+    setErrorMsg("");
+    setMsg("");
+
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: { full_name: name },
+        },
+      });
+
+      if (error) {
+        setErrorMsg(error.message);
+        setLoading(false);
+        return;
+      }
+
+      setMsg("Signup successful!.Please Check your email for verification");
+      setLoading(false);
+      setEmail("");
+      setName("");
+      setPassword("");
+      setConfirmPassword("");
+    } catch (error) {
+      setErrorMsg("Something went wrong. Please try again.");
+      setLoading(false);
     }
   };
   return (
@@ -42,7 +70,8 @@ export default function Signup() {
                   <Form.Control
                     placeholder="Enter your full name"
                     type="text"
-                    ref={nameRef}
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                     required
                   />
                 </Form.Group>
@@ -51,7 +80,8 @@ export default function Signup() {
                   <Form.Control
                     placeholder="name@email.com"
                     type="email"
-                    ref={emailRef}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     required
                   />
                 </Form.Group>
@@ -60,7 +90,8 @@ export default function Signup() {
                   <Form.Control
                     placeholder="Create Password"
                     type="password"
-                    ref={passwordRef}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     required
                   />
                 </Form.Group>
@@ -68,7 +99,8 @@ export default function Signup() {
                   <Form.Label>Confirm Password</Form.Label>
                   <Form.Control
                     type="password"
-                    ref={confirmPasswordRef}
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
                     placeholder="Re-enter Password"
                     required
                   />
