@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import CoursesCard from "./CoursesCard";
 import { Container } from "react-bootstrap";
-import Topic from "./Topic";
+import Filters from "./Filters";
 import { CoursesContext } from "../store/CourseContext";
 
 function CoursesList() {
@@ -9,7 +9,7 @@ function CoursesList() {
   const [selectCategory, setSelectCategory] = useState("ALL");
   const [coursesPrice, setCoursesPrice] = useState("All");
   const [filterCourses, setFilterCourses] = useState([]);
-  const [sortCriteria, setSortCriteria] = useState("Title"); 
+  const [sortCriteria, setSortCriteria] = useState("All"); 
   const [selectedRating, setSelectedRating] = useState(0);
   const [displayedStars, setDisplayedStars] = useState("");
 
@@ -81,7 +81,7 @@ function CoursesList() {
   return (
     <>
       <Container className="d-flex flex-wrap">
-        <Topic
+        <Filters
           handleSelect={handleSelect}
           selectCategory={selectCategory}
           handlePrice={handlePrice}
@@ -90,6 +90,7 @@ function CoursesList() {
           coursesPrice={coursesPrice}
           selectedRating={selectedRating}
           stars={displayedStars}
+          sortCriteria={sortCriteria}
         />
       </Container>
       <Container className="d-flex flex-wrap">
