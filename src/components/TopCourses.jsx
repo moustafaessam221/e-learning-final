@@ -43,6 +43,7 @@ function TopCourses() {
             comments={course.comments}
             views={course.views}
             author={course.author}
+            category={course.category}
           />
         ))}
       </Row>
