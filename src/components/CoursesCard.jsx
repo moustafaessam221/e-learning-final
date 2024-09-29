@@ -2,7 +2,7 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom";
 
-function CoursesCard({ title, rating, price, views, id, author, createdAt }) {
+function CoursesCard({ title, rating, price, views, id, author, createdAt, description, category }) {
   return (
     <Card
       style={{

@@ -5,8 +5,8 @@ import { FaMoneyBillAlt, FaUsers, FaCertificate } from "react-icons/fa"; // You 
 function InvestComponent() {
   return (
     <Container className="text-center py-5">
-      <h2 className="mb-4">Invest in your career with EduSpace Plus</h2>
-      <Row>
+      <h2 className="mb-5">Invest in your career with EduSpace Plus</h2>
+      <Row className="mt-5">
         <Col md={4} className="mb-4">
           <FaMoneyBillAlt size={50} className="mb-3" />
           <h4>Save Money</h4>

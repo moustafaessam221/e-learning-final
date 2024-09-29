@@ -12,12 +12,16 @@ import Footer from "./components/Footer";
 import PricingCard from "./pages/Pricing";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import ContactUs from './pages/ContactUs';
+import AboutUs from './pages/AboutUs';
+import AddCoursePage from "./pages/AddCoursePage";
+
+
 
 function App() {
-  const [courses, setCourses] = useState(null);
+  const [courses, setCourses] = useState([]);
   const [fetchError, setFetchError] = useState(null);
 
-  // fetching the courses data
   useEffect(() => {
     const fetchCourses = async () => {
       const { data, error } = await supabase.from("courses").select();
@@ -47,6 +51,11 @@ function App() {
             <Route path="profile" element={<Profile />} />
             <Route path="courses/:id" element={<CourseDetails />} />
             <Route path="price" element={<PricingCard />} />
+            <Route path="/contact" element={<ContactUs />} />
+            <Route path="/about" element={<AboutUs />} />
+            <Route path="/add-course" element={<AddCoursePage/>} />
+
+
           </Routes>
           <Footer />
         </BrowserRouter>

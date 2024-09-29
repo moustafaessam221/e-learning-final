@@ -17,7 +17,7 @@ export default function AuthCardButton({
         role="button"
         onClick={callback}
         bg={backgroundColor}
-        className="text-white my-2"
+        className="text-white my-2 mx-3"
         border="light"
       >
         <Card.Body>

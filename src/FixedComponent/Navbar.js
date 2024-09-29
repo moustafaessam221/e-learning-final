@@ -1,76 +1,106 @@
 import React from "react";
-import { LinkContainer } from "react-router-bootstrap";
-import { Navbar, Nav, Container, Button } from "react-bootstrap";
-import SearchBar from "./Search";
+import {
+  Container,
+  Nav,
+  Navbar
+} from "react-bootstrap";
+import {
+  FaShoppingCart,
+  FaUser
+} from "react-icons/fa";
+import { Link } from "react-router-dom";
+import SearchBar from './Search.js';
 
 const Navigationbar = () => {
   return (
     <Navbar bg="primary" variant="dark" expand="lg" className="py-3">
       <Container fluid>
-        <LinkContainer to="/">
+        <Container as={Link} to="/">
           <Navbar.Brand style={{ fontSize: "1.5rem", fontWeight: "bold" }}>
             EduSpace
           </Navbar.Brand>
-        </LinkContainer>
+        </Container>
 
         <Navbar.Toggle aria-controls="navbarScroll" />
 
         <Navbar.Collapse id="navbarScroll">
-          <Nav className="ms-auto my-2 my-lg-0" navbarScroll>
-            <LinkContainer to="/">
+          <Nav className="me-auto my-2 my-lg-0" navbarScroll>
+            <Container>
               <Nav.Link
                 className="text-white"
+                as={Link}
+                to="/"
                 style={{ transition: "color 0.3s ease" }}
               >
                 Home
               </Nav.Link>
-            </LinkContainer>
-            <LinkContainer to="/about">
+            </Container>
+            <Container as={Link} to="/about">
               <Nav.Link
                 className="text-white"
+                as={Link}
+                to="/about"
                 style={{ transition: "color 0.3s ease" }}
               >
                 About
               </Nav.Link>
-            </LinkContainer>
-            <LinkContainer to="/courses">
+            </Container>
+            <Container>
               <Nav.Link
                 className="text-white"
+                as={Link}
+                to="/courses"
                 style={{ transition: "color 0.3s ease" }}
               >
                 Courses
               </Nav.Link>
-            </LinkContainer>
-            <LinkContainer to="/profile">
+            </Container>
+            <Container>
               <Nav.Link
                 className="text-white"
+                as={Link}
+                to="/profile"
                 style={{ transition: "color 0.3s ease" }}
               >
                 Profile
               </Nav.Link>
-            </LinkContainer>
-            <LinkContainer to="/contact">
+            </Container>
+            <Container>
               <Nav.Link
+                as={Link}
+                to="/contact"
                 className="text-white"
                 style={{ transition: "color 0.3s ease" }}
               >
                 Contact
               </Nav.Link>
-            </LinkContainer>
+            </Container>
           </Nav>
 
-          <div className="d-flex justify-content-center mx-auto">
-            <SearchBar />
-          </div>
+          <SearchBar />
+          <Nav className="d-flex align-items-center">
+            <Container >
+              <Nav.Link
+                as={Link}
+                to="/cart"
+                className="text-white mx-3"
+                style={{ transition: "color 0.3s ease" }}
+              >
+                <FaShoppingCart />
+              </Nav.Link>
+            </Container>
 
-          <LinkContainer to="/login">
-            <Nav.Link
-              className="text-white mx-4"
-              style={{ transition: "color 0.3s ease" }}
-            >
-              Login
-            </Nav.Link>
-          </LinkContainer>
+            <Container>
+              <Nav.Link
+                as={Link}
+                 to="/login"
+                className="text-white mx-3"
+                style={{ transition: "color 0.3s ease" }}
+              >
+                <FaUser />
+              </Nav.Link>
+            </Container>
+          </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>
