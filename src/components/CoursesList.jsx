@@ -9,7 +9,7 @@ function CoursesList() {
   const [selectCategory, setSelectCategory] = useState("ALL");
   const [coursesPrice, setCoursesPrice] = useState("All");
   const [filterCourses, setFilterCourses] = useState([]);
-  const [sortCriteria, setSortCriteria] = useState("All"); 
+  const [sortCriteria, setSortCriteria] = useState("Sorted by"); 
   const [selectedRating, setSelectedRating] = useState(0);
   const [displayedStars, setDisplayedStars] = useState("");
 

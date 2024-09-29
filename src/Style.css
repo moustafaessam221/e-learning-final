@@ -6,3 +6,11 @@
 .mb-5 {
   margin-bottom: 5rem;
 }
+
+
+.custom-dropdown-width {
+  width: 13rem;
+  height: 60px; 
+  
+  border: 1px solid rgb(108, 106, 106);
+}
