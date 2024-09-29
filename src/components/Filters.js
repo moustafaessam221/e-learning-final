@@ -3,7 +3,9 @@ import { Dropdown } from "react-bootstrap";
 import { useContext } from "react";
 import { CoursesContext } from "../store/CourseContext";
 
-function Topic({ handleSelect, selectCategory, handlePrice, handleSort, handleRating, coursesPrice, selectedRating, stars}) {
+
+
+function Filters({ handleSelect, selectCategory, handlePrice, handleSort, handleRating, coursesPrice, selectedRating, stars,sortCriteria}) {
   const [coursesCategories, setCoursesCategories] = useState([]);
 
   const { courses } = useContext(CoursesContext);
@@ -73,7 +75,7 @@ function Topic({ handleSelect, selectCategory, handlePrice, handleSort, handleRa
       {/*Sorting Dropdwon */}
      <Dropdown onSelect={(eventKey) => handleSort(eventKey)}>
         <Dropdown.Toggle variant="success" id="dropdown-basic">
-          Sorted by
+          {sortCriteria}
         </Dropdown.Toggle>
 
         <Dropdown.Menu>
@@ -85,8 +87,8 @@ function Topic({ handleSelect, selectCategory, handlePrice, handleSort, handleRa
         </Dropdown.Menu>
       </Dropdown>
 
-    </>
+      </>
   );
 }
 
-export default Topic;
+export default Filters;
