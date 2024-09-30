@@ -1,13 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Card, Form, Alert, Button, Row, Col } from "react-bootstrap";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebookF, faGoogle } from "@fortawesome/free-brands-svg-icons";
 import AuthCardButton from "../FixedComponent/AuthCardButton";
 import supabase from "../config/supabaseClient";
+import { UsersContext } from "../store/UsersContext";
 
 export default function Login() {
+  const Navigate = useNavigate();
+
+  const { setUser } = useContext(UsersContext);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
@@ -27,7 +32,7 @@ export default function Login() {
     setMsg("");
 
     try {
-      const { error } = await supabase.auth.signInWithPassword({
+      const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
@@ -38,11 +43,15 @@ export default function Login() {
         return;
       }
 
+      if (data.user) {
+        setUser(data.user);
+        localStorage.setItem("user", JSON.stringify(data.user));
+      }
       setMsg("Login successful!");
       setLoading(false);
       setEmail("");
       setPassword("");
-      window.location.href = "/profile";
+      Navigate("/profile");
     } catch (error) {
       setErrorMsg("Something went wrong. Please try again.");
       setLoading(false);

@@ -12,15 +12,19 @@ import Footer from "./components/Footer";
 import PricingCard from "./pages/Pricing";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import ContactUs from './pages/ContactUs';
-import AboutUs from './pages/AboutUs';
+import ContactUs from "./pages/ContactUs";
+import AboutUs from "./pages/AboutUs";
 import AddCoursePage from "./pages/AddCoursePage";
-
-
+import { UsersContext } from "./store/UsersContext";
 
 function App() {
   const [courses, setCourses] = useState([]);
   const [fetchError, setFetchError] = useState(null);
+  const [user, setUser] = useState(() => {
+    const storedUser = localStorage.getItem("user");
+    return storedUser ? JSON.parse(storedUser) : null;
+  });
+
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -41,24 +45,24 @@ function App() {
   return (
     <>
       <CoursesContext.Provider value={{ courses, fetchError }}>
-        <BrowserRouter>
-          <Navigationbar />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="courses" element={<Courses />} />
-            <Route path="login" element={<Login />} />
-            <Route path="signup" element={<Signup />} />
-            <Route path="profile" element={<Profile />} />
-            <Route path="courses/:id" element={<CourseDetails />} />
-            <Route path="price" element={<PricingCard />} />
-            <Route path="/contact" element={<ContactUs />} />
-            <Route path="/about" element={<AboutUs />} />
-            <Route path="/add-course" element={<AddCoursePage/>} />
-
-
-          </Routes>
-          <Footer />
-        </BrowserRouter>
+        <UsersContext.Provider value={{ user, setUser }}>
+          <BrowserRouter>
+            <Navigationbar />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="courses" element={<Courses />} />
+              <Route path="login" element={<Login />} />
+              <Route path="signup" element={<Signup />} />
+              <Route path="profile" element={<Profile />} />
+              <Route path="courses/:id" element={<CourseDetails />} />
+              <Route path="price" element={<PricingCard />} />
+              <Route path="/contact" element={<ContactUs />} />
+              <Route path="/about" element={<AboutUs />} />
+              <Route path="/add-course" element={<AddCoursePage />} />
+            </Routes>
+            <Footer />
+          </BrowserRouter>
+        </UsersContext.Provider>
       </CoursesContext.Provider>
     </>
   );
