@@ -1,5 +1,6 @@
 .cards-height {
   height: 100px;
+  width: 400px;
 
   margin-bottom: 20px;
 }
@@ -22,5 +23,15 @@
 
   .custom-dropdown-width {
     width: 100%; 
+
+  }
+  .cards-height {
+    margin-left: 100px
+  }
+  .container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
   }
 }
