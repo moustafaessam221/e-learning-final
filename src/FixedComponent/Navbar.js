@@ -1,105 +1,50 @@
 import React from "react";
-import {
-  Container,
-  Nav,
-  Navbar
-} from "react-bootstrap";
-import {
-  FaShoppingCart,
-  FaUser
-} from "react-icons/fa";
+import { Container, Nav, Navbar, Form, Button } from "react-bootstrap";
+import { FaShoppingCart, FaUser, FaSearch } from "react-icons/fa"; // إضافة أيقونة البحث
 import { Link } from "react-router-dom";
-import SearchBar from './Search.js';
+import EduSpaceLogo from "../images/EduSpaceLogo.png"; // استيراد الشعار
 
 const Navigationbar = () => {
   return (
     <Navbar bg="primary" variant="dark" expand="lg" className="py-3">
       <Container fluid>
-        <Container as={Link} to="/">
+        <Link to="/" className="d-flex align-items-center text-white text-decoration-none">
+          <img src={EduSpaceLogo} alt="EduSpace Logo" style={{ height: '40px', marginRight: '10px' }} />
           <Navbar.Brand style={{ fontSize: "1.5rem", fontWeight: "bold" }}>
             EduSpace
           </Navbar.Brand>
-        </Container>
+        </Link>
 
         <Navbar.Toggle aria-controls="navbarScroll" />
-
         <Navbar.Collapse id="navbarScroll">
-          <Nav className="me-auto my-2 my-lg-0" navbarScroll>
-            <Container>
-              <Nav.Link
-                className="text-white"
-                as={Link}
-                to="/"
-                style={{ transition: "color 0.3s ease" }}
-              >
-                Home
-              </Nav.Link>
-            </Container>
-            <Container as={Link} to="/about">
-              <Nav.Link
-                className="text-white"
-                as={Link}
-                to="/about"
-                style={{ transition: "color 0.3s ease" }}
-              >
-                About
-              </Nav.Link>
-            </Container>
-            <Container>
-              <Nav.Link
-                className="text-white"
-                as={Link}
-                to="/courses"
-                style={{ transition: "color 0.3s ease" }}
-              >
-                Courses
-              </Nav.Link>
-            </Container>
-            <Container>
-              <Nav.Link
-                className="text-white"
-                as={Link}
-                to="/profile"
-                style={{ transition: "color 0.3s ease" }}
-              >
-                Profile
-              </Nav.Link>
-            </Container>
-            <Container>
-              <Nav.Link
-                as={Link}
-                to="/contact"
-                className="text-white"
-                style={{ transition: "color 0.3s ease" }}
-              >
-                Contact
-              </Nav.Link>
-            </Container>
+          <Nav className="me-auto">
+            <Nav.Link className="text-white" as={Link} to="/">Home</Nav.Link>
+            <Nav.Link className="text-white" as={Link} to="/about">About</Nav.Link>
+            <Nav.Link className="text-white" as={Link} to="/courses">Courses</Nav.Link>
+            <Nav.Link className="text-white" as={Link} to="/profile">Profile</Nav.Link>
+            <Nav.Link className="text-white" as={Link} to="/contact">Contact</Nav.Link>
           </Nav>
 
-          <SearchBar />
-          <Nav className="d-flex align-items-center">
-            <Container >
-              <Nav.Link
-                as={Link}
-                to="/cart"
-                className="text-white mx-3"
-                style={{ transition: "color 0.3s ease" }}
-              >
-                <FaShoppingCart />
-              </Nav.Link>
-            </Container>
+          <Form className="d-flex align-items-center" style={{ width: '100%', maxWidth: '300px' }}>
+            <Form.Control
+              type="search"
+              placeholder="Search"
+              className="me-2 rounded-pill"
+              aria-label="Search"
+              style={{ border: 'none' }} // إلغاء الحدود لتحسين الشكل
+            />
+            <Button variant="outline-light" className="rounded-pill">
+              <FaSearch />
+            </Button>
+          </Form>
 
-            <Container>
-              <Nav.Link
-                as={Link}
-                 to="/login"
-                className="text-white mx-3"
-                style={{ transition: "color 0.3s ease" }}
-              >
-                <FaUser />
-              </Nav.Link>
-            </Container>
+          <Nav>
+            <Nav.Link as={Link} to="/cart" className="text-white mx-2">
+              <FaShoppingCart />
+            </Nav.Link>
+            <Nav.Link as={Link} to="/login" className="text-white mx-2">
+              <FaUser />
+            </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
