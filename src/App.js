@@ -25,6 +25,10 @@ function App() {
     return storedUser ? JSON.parse(storedUser) : null;
   });
 
+  function logout() {
+    setUser(null);
+    localStorage.removeItem("user");
+  }
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -45,7 +49,7 @@ function App() {
   return (
     <>
       <CoursesContext.Provider value={{ courses, fetchError }}>
-        <UsersContext.Provider value={{ user, setUser }}>
+        <UsersContext.Provider value={{ user, setUser, logout }}>
           <BrowserRouter>
             <Navigationbar />
             <Routes>

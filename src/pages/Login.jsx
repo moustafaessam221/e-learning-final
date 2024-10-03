@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Card, Form, Alert, Button, Row, Col } from "react-bootstrap";
 import { useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebookF, faGoogle } from "@fortawesome/free-brands-svg-icons";
 import AuthCardButton from "../FixedComponent/AuthCardButton";
@@ -12,12 +12,25 @@ export default function Login() {
   const Navigate = useNavigate();
 
   const { setUser } = useContext(UsersContext);
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [msg, setMsg] = useState("");
   const [loading, setLoading] = useState(false);
+
+  //TO BE COMPLETED
+  async function signInWithGoogle() {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+    });
+    if (error) {
+      setErrorMsg(error.message);
+    }
+    if (data.user) {
+      setUser(data.user);
+      localStorage.setItem("user", JSON.stringify(data.user));
+    }
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -79,6 +92,7 @@ export default function Login() {
                 <Form.Group className="mt-3" id="password">
                   <Form.Label>Password</Form.Label>
                   <Form.Control
+                    muted
                     placeholder="Enter Password"
                     type="password"
                     value={password}
@@ -123,7 +137,7 @@ export default function Login() {
               description="Continue with Facebook"
             />
             <AuthCardButton
-              callback={() => {}}
+              callback={signInWithGoogle}
               backgroundColor="danger"
               icon={faGoogle}
               description="Continue with Google"

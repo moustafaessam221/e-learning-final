@@ -10,7 +10,7 @@ import {
   Form,
 } from "react-bootstrap";
 import supabase from "../config/supabaseClient";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { UsersContext } from "../store/UsersContext";
 import Skills from "../FixedComponent/Skills";
 
