@@ -1,21 +1,33 @@
-import React, { useState } from 'react';  
-import { Button, Form } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Form, Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import { FaSearch } from 'react-icons/fa';
 
+const Search = () => {
+  const [query, setQuery] = useState('');
+  const navigate = useNavigate();
 
-const SearchBar = () => {  
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (query.trim()) {
+      navigate(`/search?q=${query}`);
+    }
+  };
 
-  return (  
-    <Form className="d-flex">
-    <Form.Control
-      type="search"
-      placeholder="Search"
-      className="me-2"
-      aria-label="Search"
-      style={{ width: "300px" }}
-    />
-    <Button variant="outline-success">Search</Button>
-  </Form>
-  );  
-};  
+  return (
+    <Form onSubmit={handleSearch} className="d-flex align-items-center">
+      <Form.Control
+        type="text"
+        placeholder="Search"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        className="me-2 rounded-pill"
+      />
+      <Button variant="outline-light" type="submit" className="rounded-pill">
+        <FaSearch />
+      </Button>
+    </Form>
+  );
+};
 
-export default SearchBar;
+export default Search;
