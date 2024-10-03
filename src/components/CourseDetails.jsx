@@ -10,13 +10,15 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faBarsProgress } from "@fortawesome/free-solid-svg-icons/faBarsProgress";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button, Card, Col, Container, Image, Row } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import supabase from "../config/supabaseClient";
+import { UsersContext } from "../store/UsersContext";
 
 function CourseDetails() {
   const { id } = useParams();
+  const { user } = useContext(UsersContext);
 
   const [fetchError, setFetchError] = useState(null);
   const [CourseDetails, setCourseDetails] = useState(null);
@@ -29,6 +31,7 @@ function CourseDetails() {
   const [courseHours, setCourseHours] = useState("");
   const [author, setAuthor] = useState("");
   const [categories, setCategories] = useState([]);
+  const [enrolled, setEnrolled] = useState(false);
 
   useEffect(() => {
     const fetchCourse = async () => {
@@ -59,11 +62,70 @@ function CourseDetails() {
       }
     };
 
+    const checkEnrollment = async () => {
+      if (!user) return;
+
+      const { data, error } = await supabase
+        .from("profile")
+        .select("courses")
+        .eq("id", user.id)
+        .single();
+
+      if (error) {
+        console.log(error);
+      } else if (data && data.courses) {
+        if (data.courses.includes(id)) {
+          setEnrolled(true);
+        }
+      }
+    };
+
     fetchCourse();
+    checkEnrollment();
   }, [id]);
 
-  // stars function
+  // Check if user is enrolled
 
+  // handle course enrollment
+  const handleEnroll = async () => {
+    if (!user) {
+      // will alerts be replaced with toasts?
+      alert("Please login first");
+      return;
+    }
+
+    const { data, error } = await supabase
+      .from("profile")
+      .select("courses")
+      .eq("id", user.id)
+      .single();
+    if (error) {
+      console.log(error);
+    }
+
+    if (data) {
+      const currentCourses = data.courses || [];
+
+      if (currentCourses.includes(id)) {
+        alert("Course already enrolled");
+        return;
+      }
+
+      const updatedCourses = [...currentCourses, id];
+      const { error } = await supabase
+        .from("profile")
+        .update({ courses: updatedCourses })
+        .eq("id", user.id);
+      if (error) {
+        console.log(error);
+      } else {
+        alert("Course enrolled successfully");
+        setEnrolled(true);
+      }
+    }
+  };
+
+  // stars function
   const renderStars = (rating) => {
     const totalStars = 5;
     return Array.from({ length: totalStars }, (_, index) => (
@@ -266,8 +328,10 @@ function CourseDetails() {
           className="btn-lg"
           variant="primary"
           style={{ width: "20rem", height: "63px" }}
+          onClick={handleEnroll}
+          disabled={enrolled}
         >
-          Enroll Now
+          {enrolled ? "Enrolled" : "Enroll Now"}
         </Button>
       </Container>
 

@@ -271,6 +271,7 @@ const ProfilePage = () => {
                 <p>
                   {userEducation.map((edu, index) => (
                     <Skills
+                      key={index}
                       skill={edu}
                       deleteItem={() => handleDeleteItem("education", edu)}
                     />
