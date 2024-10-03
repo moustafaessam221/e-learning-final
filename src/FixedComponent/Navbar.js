@@ -1,12 +1,12 @@
-import React from "react";
+import { React, useContext } from "react";
 import { Container, Nav, Navbar, Form, Button } from "react-bootstrap";
 import { FaShoppingCart, FaUser, FaSearch } from "react-icons/fa"; // إضافة أيقونة البحث
 import { Link } from "react-router-dom";
 import EduSpaceLogo from "../images/EduSpaceLogo.png"; // استيراد الشعار
+import { UsersContext } from "../store/UsersContext";
 
 const Navigationbar = () => {
   const { user, logout } = useContext(UsersContext);
-
   return (
     <Navbar bg="primary" variant="dark" expand="lg" className="py-3">
       <Container fluid>
