@@ -1,8 +1,11 @@
 import React from "react";
-import { Container, Nav, Navbar, Form, Button } from "react-bootstrap";
-import { FaShoppingCart, FaUser, FaSearch } from "react-icons/fa"; // إضافة أيقونة البحث
+import { Container, Nav, Navbar } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import EduSpaceLogo from "../images/EduSpaceLogo.png"; // استيراد الشعار
+import EduSpaceLogo from "../images/EduSpaceLogo.png"; 
+import Search from './Search'; 
+import { FaShoppingCart, FaUser, FaSearch } from 'react-icons/fa';    
+
+
 
 const Navigationbar = () => {
   return (
@@ -25,18 +28,7 @@ const Navigationbar = () => {
             <Nav.Link className="text-white" as={Link} to="/contact">Contact</Nav.Link>
           </Nav>
 
-          <Form className="d-flex align-items-center" style={{ width: '100%', maxWidth: '300px' }}>
-            <Form.Control
-              type="search"
-              placeholder="Search"
-              className="me-2 rounded-pill"
-              aria-label="Search"
-              style={{ border: 'none' }} // إلغاء الحدود لتحسين الشكل
-            />
-            <Button variant="outline-light" className="rounded-pill">
-              <FaSearch />
-            </Button>
-          </Form>
+          <Search />
 
           <Nav>
             <Nav.Link as={Link} to="/cart" className="text-white mx-2">
