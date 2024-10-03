@@ -75,15 +75,15 @@ const ProfilePage = () => {
 
   // delete function
   const handleDeleteItem = async (field, skill) => {
-    const updatedArray = userData[field].filter(item => item !== skill);
-  
+    const updatedArray = userData[field].filter((item) => item !== skill);
+
     const updates = { [field]: updatedArray };
-  
+
     const { error } = await supabase
       .from("profile")
       .update(updates)
       .eq("id", user.id);
-  
+
     if (error) {
       console.log(error);
     } else {
@@ -267,7 +267,11 @@ const ProfilePage = () => {
               </Button>
             </Card.Header>
             <Card.Body>
-              {userData?.education ? (
+              {userEducation.length === 0 ? (
+                <p className="text-muted">
+                  No education added yet. Add your education!
+                </p>
+              ) : (
                 <p>
                   {userEducation.map((edu, index) => (
                     <Skills
@@ -276,11 +280,6 @@ const ProfilePage = () => {
                       deleteItem={() => handleDeleteItem("education", edu)}
                     />
                   ))}
-                </p>
-              ) : (
-                <p className="text-muted">
-                  No education history added yet. Add your educational
-                  background!
                 </p>
               )}
             </Card.Body>
@@ -303,10 +302,12 @@ const ProfilePage = () => {
               </Button>
             </Card.Header>
             <Card.Body>
-              {userData?.skills ? (
-                <div
-                  style={{ display: "flex", flexWrap: "wrap", flexShrink: "0" }}
-                >
+              {userSkills.length === 0 ? (
+                <p className="text-muted">
+                  No skills added yet. Add your skills!
+                </p>
+              ) : (
+                <p>
                   {userSkills.map((skill, index) => (
                     <Skills
                       key={index}
@@ -314,11 +315,6 @@ const ProfilePage = () => {
                       deleteItem={() => handleDeleteItem("skills", skill)}
                     />
                   ))}
-                </div>
-              ) : (
-                <p className="text-muted">
-                  No skills added yet. Highlight your expertise by adding
-                  skills!
                 </p>
               )}
             </Card.Body>
