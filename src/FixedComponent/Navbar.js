@@ -4,6 +4,7 @@ import { FaShoppingCart, FaUser, FaSearch } from "react-icons/fa"; // إضافة
 import { Link } from "react-router-dom";
 import EduSpaceLogo from "../images/EduSpaceLogo.png"; // استيراد الشعار
 import { UsersContext } from "../store/UsersContext";
+import Search from "./Search";
 
 const Navigationbar = () => {
   const { user, logout } = useContext(UsersContext);
@@ -41,21 +42,7 @@ const Navigationbar = () => {
             </Nav.Link>
           </Nav>
 
-          <Form
-            className="d-flex align-items-center"
-            style={{ width: "100%", maxWidth: "300px" }}
-          >
-            <Form.Control
-              type="search"
-              placeholder="Search"
-              className="me-2 rounded-pill"
-              aria-label="Search"
-              style={{ border: "none" }} // إلغاء الحدود لتحسين الشكل
-            />
-            <Button variant="outline-light" className="rounded-pill">
-              <FaSearch />
-            </Button>
-          </Form>
+          <Search />
 
           <Nav>
             <Nav.Link as={Link} to="/cart" className="text-white mx-2">

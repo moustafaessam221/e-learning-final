@@ -16,6 +16,7 @@ import ContactUs from "./pages/ContactUs";
 import AboutUs from "./pages/AboutUs";
 import AddCoursePage from "./pages/AddCoursePage";
 import { UsersContext } from "./store/UsersContext";
+import SearchResults from "./pages/SearchResults";
 
 function App() {
   const [courses, setCourses] = useState([]);
@@ -63,6 +64,7 @@ function App() {
               <Route path="/contact" element={<ContactUs />} />
               <Route path="/about" element={<AboutUs />} />
               <Route path="/add-course" element={<AddCoursePage />} />
+              <Route path="search" element={<SearchResults />} />
             </Routes>
             <Footer />
           </BrowserRouter>
