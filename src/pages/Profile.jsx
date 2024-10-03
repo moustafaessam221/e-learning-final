@@ -53,8 +53,8 @@ const ProfilePage = () => {
         setUserData(data);
         setName(user.identities[0].identity_data.full_name);
         setUserSkills(data.skills || []);
-        setUserExperince(data.experience || []);
         setUserEducation(data.education || []);
+        setUserExperince(data.workHistory || []);
       }
     }
 
@@ -240,12 +240,20 @@ const ProfilePage = () => {
               </Button>
             </Card.Header>
             <Card.Body>
-              {userData?.workHistory ? (
-                <p>{userData.workHistory}</p>
-              ) : (
+              {userExperince.length === 0 ? (
                 <p className="text-muted">
-                  No work history added yet. Add your professional experience!
+                  No work experience added yet. Add your work experience!
                 </p>
+              ) : (
+                <div>
+                  {userExperince.map((exp, index) => (
+                    <Skills
+                      key={index}
+                      skill={exp}
+                      deleteItem={() => handleDeleteItem("workHistory", exp)}
+                    />
+                  ))}
+                </div>
               )}
             </Card.Body>
           </Card>
@@ -272,7 +280,7 @@ const ProfilePage = () => {
                   No education added yet. Add your education!
                 </p>
               ) : (
-                <p>
+                <div>
                   {userEducation.map((edu, index) => (
                     <Skills
                       key={index}
@@ -280,7 +288,7 @@ const ProfilePage = () => {
                       deleteItem={() => handleDeleteItem("education", edu)}
                     />
                   ))}
-                </p>
+                </div>
               )}
             </Card.Body>
           </Card>
@@ -307,7 +315,7 @@ const ProfilePage = () => {
                   No skills added yet. Add your skills!
                 </p>
               ) : (
-                <p>
+                <div>
                   {userSkills.map((skill, index) => (
                     <Skills
                       key={index}
@@ -315,7 +323,7 @@ const ProfilePage = () => {
                       deleteItem={() => handleDeleteItem("skills", skill)}
                     />
                   ))}
-                </p>
+                </div>
               )}
             </Card.Body>
           </Card>
