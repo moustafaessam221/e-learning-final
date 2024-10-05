@@ -84,9 +84,7 @@ function CourseDetails() {
     checkEnrollment();
   }, [id]);
 
-  // Check if user is enrolled
-
-  // handle course enrollment
+  // enroll function
   const handleEnroll = async () => {
     if (!user) {
       // will alerts be replaced with toasts?
@@ -159,8 +157,10 @@ function CourseDetails() {
               className="btn-lg"
               variant="primary"
               style={{ width: "20rem", height: "63px" }}
+              onClick={handleEnroll}
+              disabled={enrolled}
             >
-              {price ? "Enroll now" : "Enroll for Free"}
+              {enrolled ? "Enrolled" : price ? "Enroll for ${price}" : "Free"}
             </Button>
           </Col>
           <Col lg={5} className="border border-dark pt-4 px-0">

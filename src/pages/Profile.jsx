@@ -33,6 +33,7 @@ const ProfilePage = () => {
   const [userExperince, setUserExperince] = useState([]);
   const [userEducation, setUserEducation] = useState([]);
   const [enrolledCourses, setEnrolledCourses] = useState([]);
+  const [image, setImage] = useState("https://via.placeholder.com/150");
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -47,16 +48,21 @@ const ProfilePage = () => {
         .select("*")
         .eq("id", user.id)
         .single();
-
       if (error) {
         console.log(error);
       } else {
         setName(user.user_metadata.full_name);
-        setUserData(data);
+        setUserData({
+          ...data,
+          skills: data.skills || [],
+          experience: data.experience || [],
+          education: data.education || [],
+        });
         setUserSkills(data.skills || []);
         setUserEducation(data.education || []);
         setUserExperince(data.workHistory || []);
         setCourses(data.courses || []);
+        setImage(data.avatar_url || "https://via.placeholder.com/150");
       }
     };
     fetchProfile();
@@ -113,28 +119,63 @@ const ProfilePage = () => {
     }
   };
 
+  // enrolled courses
   useEffect(() => {
     const fetchCourses = async () => {
-      const allCourseArr = []
+      const allCourseArr = [];
       for (const course of courses) {
         const { data, error } = await supabase
-        .from("courses")
-        .select()
-        .eq("id", course)
-        .single();
+          .from("courses")
+          .select()
+          .eq("id", course)
+          .single();
+        if (error) {
+          console.log(error);
+        } else {
+          allCourseArr.push(data);
+          setEnrolledCourses(allCourseArr);
+        }
+      }
+    };
+    fetchCourses();
+  }, [courses]);
+
+  // image upload
+  const handleImageUpload = async (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const filePath = `public/${user.id}/${file.name}`;
+
+    // upload the image into storage
+    const { error } = await supabase.storage
+      .from("avatars")
+      .upload(filePath, file);
+
+    if (error) {
+      console.log(error);
+      return;
+    }
+
+    // get the image URL
+    const { data } = supabase.storage.from("avatars").getPublicUrl(filePath);
+
+    const publicUrl = data.publicUrl;
+    if (!publicUrl) {
+      console.log("Error: public URL not found");
+      return;
+    } else {
+      const { error } = await supabase
+        .from("profile")
+        .update({ avatar_url: publicUrl })
+        .eq("id", user.id);
       if (error) {
         console.log(error);
       } else {
-        allCourseArr.push(data);
-        setEnrolledCourses(allCourseArr);
-        console.log(allCourseArr);
+        setImage(publicUrl);
       }
-
-    };
-      }
-
-    fetchCourses();
-  }, [courses]);
+    }
+  };
 
   return (
     <Container className="my-5">
@@ -142,12 +183,21 @@ const ProfilePage = () => {
         <Col lg={4} className="mb-4">
           <Card>
             <Card.Body className="text-center">
+              <Form.Control
+                type="file"
+                hidden
+                id="profilePicture"
+                onChange={handleImageUpload}
+              />
               <Image
-                src="https://via.placeholder.com/150"
+                src={image}
                 roundedCircle
                 fluid
                 className="mb-3"
                 style={{ cursor: "pointer" }}
+                onClick={() =>
+                  document.getElementById("profilePicture").click()
+                }
               />
               <h2 style={{ cursor: "pointer" }}>{name}</h2>
               <p style={{ cursor: "pointer" }}>{email}</p>
@@ -202,7 +252,7 @@ const ProfilePage = () => {
                 <p className="text-muted">
                   No courses added yet. Add courses to track your progress!
                 </p>
-              ): (
+              ) : (
                 <ul>
                   {enrolledCourses.map((course, index) => (
                     <li key={index}>{course.title}</li>
