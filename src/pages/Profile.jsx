@@ -32,6 +32,7 @@ const ProfilePage = () => {
   const [userSkills, setUserSkills] = useState([]);
   const [userExperince, setUserExperince] = useState([]);
   const [userEducation, setUserEducation] = useState([]);
+  const [enrolledCourses, setEnrolledCourses] = useState([]);
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -40,7 +41,7 @@ const ProfilePage = () => {
       return;
     }
 
-    async function fetchProfile() {
+    const fetchProfile = async () => {
       const { data, error } = await supabase
         .from("profile")
         .select("*")
@@ -50,14 +51,14 @@ const ProfilePage = () => {
       if (error) {
         console.log(error);
       } else {
+        setName(user.user_metadata.full_name);
         setUserData(data);
-        setName(user.identities[0].identity_data.full_name);
         setUserSkills(data.skills || []);
         setUserEducation(data.education || []);
         setUserExperince(data.workHistory || []);
+        setCourses(data.courses || []);
       }
-    }
-
+    };
     fetchProfile();
   }, [user]);
 
@@ -111,6 +112,29 @@ const ProfilePage = () => {
       handleCloseModal();
     }
   };
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+      const allCourseArr = []
+      for (const course of courses) {
+        const { data, error } = await supabase
+        .from("courses")
+        .select()
+        .eq("id", course)
+        .single();
+      if (error) {
+        console.log(error);
+      } else {
+        allCourseArr.push(data);
+        setEnrolledCourses(allCourseArr);
+        console.log(allCourseArr);
+      }
+
+    };
+      }
+
+    fetchCourses();
+  }, [courses]);
 
   return (
     <Container className="my-5">
@@ -174,14 +198,14 @@ const ProfilePage = () => {
               Courses in Progress
             </Card.Header>
             <Card.Body>
-              {courses.length === 0 ? (
+              {enrolledCourses.length === 0 ? (
                 <p className="text-muted">
-                  No courses added yet. Start adding your courses!
+                  No courses added yet. Add courses to track your progress!
                 </p>
-              ) : (
+              ): (
                 <ul>
-                  {courses.map((course, index) => (
-                    <li key={index}>{course}</li>
+                  {enrolledCourses.map((course, index) => (
+                    <li key={index}>{course.title}</li>
                   ))}
                 </ul>
               )}
