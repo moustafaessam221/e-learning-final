@@ -30,7 +30,7 @@ const ProfilePage = () => {
   const [fieldValue, setFieldValue] = useState("");
   const [fieldTitle, setFieldTitle] = useState("");
   const [userSkills, setUserSkills] = useState([]);
-  const [userExperince, setUserExperince] = useState([]);
+  const [workHistory, setWorkHistory] = useState([]);
   const [userEducation, setUserEducation] = useState([]);
   const [enrolledCourses, setEnrolledCourses] = useState([]);
   const [image, setImage] = useState("https://via.placeholder.com/150");
@@ -51,16 +51,19 @@ const ProfilePage = () => {
       if (error) {
         console.log(error);
       } else {
+        // console.log(user)
         setName(user.user_metadata.full_name);
+        setEmail(user.email);
         setUserData({
           ...data,
           skills: data.skills || [],
           experience: data.experience || [],
           education: data.education || [],
+          workHistory: data.workHistory || [],
         });
         setUserSkills(data.skills || []);
         setUserEducation(data.education || []);
-        setUserExperince(data.workHistory || []);
+        setWorkHistory(data.workHistory || []);
         setCourses(data.courses || []);
         setImage(data.avatar_url || "https://via.placeholder.com/150");
       }
@@ -147,14 +150,17 @@ const ProfilePage = () => {
 
     const filePath = `public/${user.id}/${file.name}`;
 
+
     // upload the image into storage
     const { error } = await supabase.storage
       .from("avatars")
-      .upload(filePath, file);
+      .upload(filePath, file , { upsert: true });
 
     if (error) {
       console.log(error);
       return;
+    } else {
+      console.log("File uploaded successfully");
     }
 
     // get the image URL
@@ -165,6 +171,7 @@ const ProfilePage = () => {
       console.log("Error: public URL not found");
       return;
     } else {
+      // change the image in the database with the new URL
       const { error } = await supabase
         .from("profile")
         .update({ avatar_url: publicUrl })
@@ -200,7 +207,7 @@ const ProfilePage = () => {
                 }
               />
               <h2 style={{ cursor: "pointer" }}>{name}</h2>
-              <p style={{ cursor: "pointer" }}>{email}</p>
+              <p style={{ cursor: "pointer" }} className="text-muted fs-5">{email}</p>
               <p
                 style={{ cursor: "pointer" }}
                 onClick={() => handleShowModal("bio", "Short Bio", bio)}
@@ -314,13 +321,13 @@ const ProfilePage = () => {
               </Button>
             </Card.Header>
             <Card.Body>
-              {userExperince.length === 0 ? (
+              {workHistory.length === 0 ? (
                 <p className="text-muted">
                   No work experience added yet. Add your work experience!
                 </p>
               ) : (
                 <div>
-                  {userExperince.map((exp, index) => (
+                  {workHistory.map((exp, index) => (
                     <Skills
                       key={index}
                       skill={exp}
