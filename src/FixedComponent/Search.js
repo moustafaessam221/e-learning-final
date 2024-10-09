@@ -11,6 +11,7 @@ const Search = () => {
     e.preventDefault();
     if (query.trim()) {
       navigate(`/search?q=${query}`);
+      setQuery('');
     }
   };
 
