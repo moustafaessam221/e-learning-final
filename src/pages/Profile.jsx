@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import {
   Container,
   Row,
@@ -8,14 +8,21 @@ import {
   Button,
   Modal,
   Form,
+  ListGroup,
+  ListGroupItem,
 } from "react-bootstrap";
 import supabase from "../config/supabaseClient";
 import { useNavigate } from "react-router-dom";
 import { UsersContext } from "../store/UsersContext";
 import Skills from "../FixedComponent/Skills";
+import { Link } from "react-router-dom";
 
 const ProfilePage = () => {
+
   const { user } = useContext(UsersContext);
+  const imgInputRef = useRef(null);
+  const userIdShortened = user.id.slice(0, 5);
+
   const [userData, setUserData] = useState(null);
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
@@ -37,12 +44,13 @@ const ProfilePage = () => {
 
   const navigate = useNavigate();
   useEffect(() => {
-    if (!user || !user.id) {
+    if (!user?.id) {
       navigate("/login");
       return;
     }
 
     const fetchProfile = async () => {
+      
       const { data, error } = await supabase
         .from("profile")
         .select("*")
@@ -69,7 +77,7 @@ const ProfilePage = () => {
       }
     };
     fetchProfile();
-  }, [user]);
+  }, [user, navigate, userData]);
 
   const handleShowModal = (field, title, currentValue) => {
     setCurrentField(field);
@@ -85,6 +93,7 @@ const ProfilePage = () => {
 
   // delete function
   const handleDeleteItem = async (field, skill) => {
+    console.log("This function is working fine!");
     const updatedArray = userData[field].filter((item) => item !== skill);
 
     const updates = { [field]: updatedArray };
@@ -97,7 +106,7 @@ const ProfilePage = () => {
     if (error) {
       console.log(error);
     } else {
-      setUserData({ ...userData, ...updates });
+      setUserData((prevData) => ({ ...prevData, [field]: updatedArray }));
     }
   };
 
@@ -125,19 +134,13 @@ const ProfilePage = () => {
   // enrolled courses
   useEffect(() => {
     const fetchCourses = async () => {
-      const allCourseArr = [];
-      for (const course of courses) {
+      if (courses.length > 0) {
         const { data, error } = await supabase
           .from("courses")
-          .select()
-          .eq("id", course)
-          .single();
-        if (error) {
-          console.log(error);
-        } else {
-          allCourseArr.push(data);
-          setEnrolledCourses(allCourseArr);
-        }
+          .select("*")
+          .in("id", courses);
+        if (error) console.log(error);
+        else setEnrolledCourses(data);
       }
     };
     fetchCourses();
@@ -150,11 +153,10 @@ const ProfilePage = () => {
 
     const filePath = `public/${user.id}/${file.name}`;
 
-
     // upload the image into storage
     const { error } = await supabase.storage
       .from("avatars")
-      .upload(filePath, file , { upsert: true });
+      .upload(filePath, file, { upsert: true });
 
     if (error) {
       console.log(error);
@@ -193,7 +195,7 @@ const ProfilePage = () => {
               <Form.Control
                 type="file"
                 hidden
-                id="profilePicture"
+                ref = {imgInputRef} 
                 onChange={handleImageUpload}
               />
               <Image
@@ -203,11 +205,13 @@ const ProfilePage = () => {
                 className="mb-3"
                 style={{ cursor: "pointer" }}
                 onClick={() =>
-                  document.getElementById("profilePicture").click()
+                  imgInputRef.current.click()
                 }
               />
               <h2 style={{ cursor: "pointer" }}>{name}</h2>
-              <p style={{ cursor: "pointer" }} className="text-muted fs-5">{email}</p>
+              <p style={{ cursor: "pointer" }} className="text-muted fs-5">
+                {email}
+              </p>
               <p
                 style={{ cursor: "pointer" }}
                 onClick={() => handleShowModal("bio", "Short Bio", bio)}
@@ -260,11 +264,11 @@ const ProfilePage = () => {
                   No courses added yet. Add courses to track your progress!
                 </p>
               ) : (
-                <ul>
+                <ListGroup>
                   {enrolledCourses.map((course, index) => (
-                    <li key={index}>{course.title}</li>
+                    <ListGroupItem key={index} as={Link} to={`/${userIdShortened}/${course.id}`}>{course.title}</ListGroupItem>
                   ))}
-                </ul>
+                </ListGroup>
               )}
             </Card.Body>
           </Card>

@@ -21,7 +21,6 @@ function CourseDetails() {
   const { user } = useContext(UsersContext);
 
   const [fetchError, setFetchError] = useState(null);
-  const [CourseDetails, setCourseDetails] = useState(null);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
@@ -32,6 +31,15 @@ function CourseDetails() {
   const [author, setAuthor] = useState("");
   const [categories, setCategories] = useState([]);
   const [enrolled, setEnrolled] = useState(false);
+
+  let buttonText;
+  if (enrolled) {
+    buttonText = "Enrolled";
+  } else if (price) {
+    buttonText = `Enroll for ${price} $`;
+  } else {
+    buttonText = "Free";
+  }
 
   useEffect(() => {
     const fetchCourse = async () => {
@@ -86,6 +94,9 @@ function CourseDetails() {
 
   // enroll function
   const handleEnroll = async () => {
+    let course_content = [];
+    let final_quiz;
+
     if (!user) {
       // will alerts be replaced with toasts?
       alert("Please login first");
@@ -103,12 +114,25 @@ function CourseDetails() {
 
     if (data) {
       const currentCourses = data.courses || [];
-
       if (currentCourses.includes(id)) {
         alert("Course already enrolled");
         return;
       }
 
+      // add enrolled course to enrolled_courses table
+      const { data: courseData, error: courseFetchingError } = await supabase
+        .from("courses")
+        .select('content, quiz')
+        .eq("id", id)
+        .single();
+      if (courseFetchingError) {
+        console.log(courseFetchingError);
+      } else {
+        course_content = courseData.content;
+        final_quiz = courseData.quiz;
+      }
+
+      // add course to user profile
       const updatedCourses = [...currentCourses, id];
       const { error } = await supabase
         .from("profile")
@@ -119,6 +143,21 @@ function CourseDetails() {
       } else {
         alert("Course enrolled successfully");
         setEnrolled(true);
+        const { data, error } = await supabase
+          .from("enrolled_courses")
+          .insert({
+            user_id: user.id,
+            course_id: id,
+            course_content: course_content,
+            final_quiz: final_quiz,
+          })
+          .single();
+
+        if (error) {
+          console.log(error);
+        } else {
+          console.log("Course enrolled successfully");
+        }
       }
     }
   };
@@ -160,7 +199,7 @@ function CourseDetails() {
               onClick={handleEnroll}
               disabled={enrolled}
             >
-              {enrolled ? "Enrolled" : price ? "Enroll for ${price}" : "Free"}
+              {buttonText}
             </Button>
           </Col>
           <Col lg={5} className="border border-dark pt-4 px-0">
@@ -331,7 +370,7 @@ function CourseDetails() {
           onClick={handleEnroll}
           disabled={enrolled}
         >
-          {enrolled ? "Enrolled" : "Enroll Now"}
+          {buttonText}
         </Button>
       </Container>
 
