@@ -35,3 +35,43 @@
     
   }
 }
+.pricing-title {
+  color: #333;
+}
+
+.pricing-icon {
+  display: flex;
+  justify-content: center;
+}
+
+.pricing-icon-large {
+  font-size: 3rem;
+  color: blue;
+}
+
+.plan-title {
+  color: orange;
+  font-weight: bold;
+}
+
+
+.feature-list {
+  padding-left: 0; 
+}
+
+.feature-list li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+
+.check-icon {
+  color: lightgreen;
+  margin-right: 10px;
+}
+
+.times-icon {
+  color: red;
+  margin-right: 10px;
+}
