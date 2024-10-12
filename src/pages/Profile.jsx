@@ -16,9 +16,9 @@ import { useNavigate } from "react-router-dom";
 import { UsersContext } from "../store/UsersContext";
 import Skills from "../FixedComponent/Skills";
 import { Link } from "react-router-dom";
+import "../Style.css"
 
 const ProfilePage = () => {
-
   const { user } = useContext(UsersContext);
   const imgInputRef = useRef(null);
   const userIdShortened = user.id.slice(0, 5);
@@ -50,7 +50,6 @@ const ProfilePage = () => {
     }
 
     const fetchProfile = async () => {
-      
       const { data, error } = await supabase
         .from("profile")
         .select("*")
@@ -195,18 +194,14 @@ const ProfilePage = () => {
               <Form.Control
                 type="file"
                 hidden
-                ref = {imgInputRef} 
+                ref={imgInputRef}
                 onChange={handleImageUpload}
               />
               <Image
                 src={image}
                 roundedCircle
-                fluid
-                className="mb-3 w-50 h-50 mx-auto rounded-circle"
-                style={{ cursor: "pointer" }}
-                onClick={() =>
-                  imgInputRef.current.click()
-                }
+                className="mb-3 profile-img"
+                onClick={() => imgInputRef.current.click()}
               />
               <h2 style={{ cursor: "pointer" }}>{name}</h2>
               <p style={{ cursor: "pointer" }} className="text-muted fs-5">
@@ -266,7 +261,13 @@ const ProfilePage = () => {
               ) : (
                 <ListGroup>
                   {enrolledCourses.map((course, index) => (
-                    <ListGroupItem key={index} as={Link} to={`/${userIdShortened}/${course.id}`}>{course.title}</ListGroupItem>
+                    <ListGroupItem
+                      key={index}
+                      as={Link}
+                      to={`/${userIdShortened}/${course.id}`}
+                    >
+                      {course.title}
+                    </ListGroupItem>
                   ))}
                 </ListGroup>
               )}

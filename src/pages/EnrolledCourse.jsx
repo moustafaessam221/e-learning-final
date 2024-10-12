@@ -2,7 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { UsersContext } from "../store/UsersContext";
 import supabase from "../config/supabaseClient";
 import { useParams, useNavigate } from "react-router-dom";
-import { Container, Row, Col, ListGroup, Button } from 'react-bootstrap';
+import { Container, Row, Col, ListGroup, Button } from "react-bootstrap";
+import Comments from "../components/Comments";
 
 function EnrolledCourse() {
   const { user } = useContext(UsersContext);
@@ -13,54 +14,55 @@ function EnrolledCourse() {
   const [quizLink, setQuizLink] = useState("");
   const [courseName, setCourseName] = useState("");
   const [completedItems, setCompletedItems] = useState([]);
+  const [courseComments, setCourseComments] = useState([]);
 
   useEffect(() => {
     if (!user?.id) {
       navigate("/login");
       return;
     }
-  
+
     const fetchCourse = async () => {
       const { data, error } = await supabase
         .from("enrolled_courses")
         .select("*")
         .eq("user_id", user.id)
         .eq("course_id", courseId);
-  
+
       if (error) {
         console.log(error);
       } else {
-        setCourseContent(data[0].course_content);
+        setCourseContent(data[0].course_content || []);
         setQuizLink(data[0].final_quiz);
         setCompletedItems(Array(data[0].course_content.length).fill(false));
       }
     };
-  
+
     const fetchSpecificCourse = async () => {
       const { data, error } = await supabase
         .from("courses")
         .select("*")
         .eq("id", courseId);
-  
+
       if (error) {
         console.log(error);
       } else {
         setCourseName(data[0].title);
+        setCourseComments(data[0].comments);
       }
     };
-  
+
     fetchCourse();
     fetchSpecificCourse();
-
-
   }, [user, courseId, navigate]);
+
   const handleCheckboxChange = (index) => {
     const newCompletedItems = [...completedItems];
     newCompletedItems[index] = !newCompletedItems[index];
     setCompletedItems(newCompletedItems);
   };
 
-  const allCompleted = completedItems.every(item => item);
+  const allCompleted = completedItems.every((item) => item);
 
   return (
     <Container className="my-5">
@@ -77,26 +79,42 @@ function EnrolledCourse() {
         </Col>
         <Col md={4}>
           <ListGroup>
-            {courseContent.map((module, index) => (
-              <ListGroup.Item key={index}>
-                <input className="form-check-input me-3"
-                  type="checkbox"
-                  checked={completedItems[index]}
-                  onChange={() => handleCheckboxChange(index)}
-                />
-                {module.title}
-                {completedItems[index] && <span className="text-success float-end">Completed</span>}
-
-              </ListGroup.Item>
-            ))}
+            {courseContent ? (
+              courseContent.map((module, index) => (
+                <ListGroup.Item key={index}>
+                  <input
+                    className="form-check-input me-3"
+                    type="checkbox"
+                    checked={completedItems[index]}
+                    onChange={() => handleCheckboxChange(index)}
+                  />
+                  {module.title}
+                  {completedItems[index] && (
+                    <span className="text-success float-end">Completed</span>
+                  )}
+                </ListGroup.Item>
+              ))
+            ) : (
+              <h5 className="text-muted">No modules yet</h5>
+            )}
           </ListGroup>
           {allCompleted && (
-            <Button variant="primary" className="mt-3" href={quizLink}>
+            <Button
+              variant="primary"
+              className="mt-3"
+              href={
+                quizLink.startsWith("http") ? quizLink : `https://${quizLink}`
+              }
+              target="_blank"
+            >
               Go to Quiz
             </Button>
           )}
         </Col>
       </Row>
+
+      {/* Comments  */}
+      <Comments courseComments={courseComments} />
     </Container>
   );
 }
