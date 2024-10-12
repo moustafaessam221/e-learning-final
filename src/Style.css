@@ -13,7 +13,6 @@
 .custom-dropdown-width {
   width: 13rem;
   height: 60px; 
-  
   border: 1px solid rgb(108, 106, 106);
 }
 
@@ -74,4 +73,7 @@
 .times-icon {
   color: red;
   margin-right: 10px;
+}
+.button-height{
+  height: 50px;
 }

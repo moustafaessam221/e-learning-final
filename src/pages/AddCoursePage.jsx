@@ -2,19 +2,21 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Form, Button, Container, Row, Col, Dropdown, DropdownButton } from 'react-bootstrap';
 import { UsersContext } from '../store/UsersContext';
 import supabase from "../config/supabaseClient";
+import "../Style.css"; 
 
 function AddCourses() {
   const { user } = useContext(UsersContext);
   const [title, setTitle] = useState('');
   const [short_description, setShortDescription] = useState('');
-  const [author, setAuthor] = useState('');
+ 
   const [description, setLongDescription] = useState('');
   const [category, setCategory] = useState([]);
   const [availableCategories, setAvailableCategories] = useState([]);
   const [price, setPrice] = useState(0);
   const [course_hours, setHours] = useState(0);
   const [videoFile, setVideoFile] = useState(null);
-
+  const [quiz, setQuiz] = useState('');
+  const author  = user.user_metadata.full_name;
   useEffect(() => {
     async function fetchCategories() {
       const { data: courses, error } = await supabase.from('courses').select('category');
@@ -45,8 +47,14 @@ function AddCourses() {
 
   const handlesubmit = async (event) => {
     event.preventDefault();
-
+    
     try {
+     
+     
+     
+      const randomRating = Math.floor(Math.random() * 5) + 1; 
+      const randomViews = Math.floor(Math.random() * 1000) + 1; 
+
       const { data, error } = await supabase
         .from("courses")
         .insert([
@@ -58,6 +66,9 @@ function AddCourses() {
             description,
             short_description,
             author,
+            quiz,
+            rating: randomRating,
+            views: randomViews,
           }
         ]);
 
@@ -72,7 +83,7 @@ function AddCourses() {
         setPrice(0);
         setShortDescription('');
         setTitle('');
-        setAuthor('');
+        setQuiz('');
       }
     } catch (err) {
       console.error("Unexpected error:", err);
@@ -116,14 +127,14 @@ function AddCourses() {
             </Col>
           </Row>
 
-          
+          <Row>
             <Col md={12}>
               <Form.Group className="mb-4">
                 <Form.Label className="fw-bold">Short Description</Form.Label>
                 <Form.Control as="textarea" rows={3} placeholder="Enter short description" value={short_description} onChange={(e) => setShortDescription(e.target.value)} required />
               </Form.Group>
             </Col>
-          
+          </Row>
 
           <Row>
             <Col md={12}>
@@ -158,18 +169,15 @@ function AddCourses() {
             </Col>
             <Col md={6}>
               <Form.Group className="mb-4">
-                <Form.Label className="fw-bold">Author</Form.Label>
-                <Form.Control type="text" placeholder="Enter name of author" value={author} onChange={(e) => setAuthor(e.target.value)} required />
+                <Form.Label className="fw-bold">Quiz URL</Form.Label>
+                <Form.Control type="text" placeholder="Enter quiz URL" value={quiz} onChange={(e) => setQuiz(e.target.value)} required />
               </Form.Group>
             </Col>
           </Row>
-            <Col md={4} >
-            <Form.Group className="mb-4" >
-              <Button variant="primary" type="submit" className="mt-4 w-50 " style={{ height: "50px"}} >
-                Add Course
-              </Button>
-              </Form.Group>
-            </Col>
+
+          <Button variant="primary" type="submit" className="mt-3 w-50 button-height" >
+            Add Course
+          </Button>
         </Form>
       </Container>
     </>
