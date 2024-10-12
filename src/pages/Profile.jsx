@@ -202,7 +202,7 @@ const ProfilePage = () => {
                 src={image}
                 roundedCircle
                 fluid
-                className="mb-3"
+                className="mb-3 w-50 h-50 mx-auto rounded-circle"
                 style={{ cursor: "pointer" }}
                 onClick={() =>
                   imgInputRef.current.click()
