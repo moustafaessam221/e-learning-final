@@ -17,6 +17,7 @@ import AboutUs from "./pages/AboutUs";
 import AddCoursePage from "./pages/AddCoursePage";
 import { UsersContext } from "./store/UsersContext";
 import SearchResults from './pages/SearchResults';
+import EnrolledCourse from "./pages/EnrolledCourse";
 
 function App() {
   const [courses, setCourses] = useState([]);
@@ -65,6 +66,7 @@ function App() {
             <Route path="/add-course" element={<AddCoursePage />} />
             <Route path="/search" element={<SearchResults />} />
             <Route path="/course/:id" element={<CourseDetails />} />
+            <Route path="/:userId/:courseId" element={<EnrolledCourse />} />
           </Routes>
           <Footer />
         </BrowserRouter>

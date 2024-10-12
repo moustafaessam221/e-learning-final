@@ -6,7 +6,7 @@ const AboutUs = () => {
     <Container className="my-5">
       <h1 className="text-center mb-4">About Us</h1>
 
-      <h2 className="mb-3">Who We Are</h2>
+      <h2 className="mb-3">Who We Are?</h2>
       <p>
         We are a dedicated group of students from the first cohort of the Digital Egypt Pioneers initiative. 
         Our team is proud to present our project focused on an innovative e-learning platform titled <strong>EduSpace</strong>.
