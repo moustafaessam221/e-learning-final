@@ -67,7 +67,9 @@ const ProfilePage = () => {
           experience: data.experience || [],
           education: data.education || [],
           workHistory: data.workHistory || [],
+          projects: data.projects || [],
         });
+        setProjects(data.projects || []);
         setUserSkills(data.skills || []);
         setUserEducation(data.education || []);
         setWorkHistory(data.workHistory || []);
@@ -296,11 +298,15 @@ const ProfilePage = () => {
                   No projects added yet. Showcase your work by adding projects!
                 </p>
               ) : (
-                <ul>
+                <div>
                   {projects.map((project, index) => (
-                    <li key={index}>{project}</li>
+                    <Skills
+                      key={index}
+                      skill={project}
+                      deleteItem={() => handleDeleteItem("projects", project)}
+                    />
                   ))}
-                </ul>
+                </div>
               )}
             </Card.Body>
           </Card>
