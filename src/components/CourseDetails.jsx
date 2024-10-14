@@ -12,13 +12,15 @@ import { faBarsProgress } from "@fortawesome/free-solid-svg-icons/faBarsProgress
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useContext, useEffect, useState } from "react";
 import { Button, Card, Col, Container, Image, Row } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import supabase from "../config/supabaseClient";
 import { UsersContext } from "../store/UsersContext";
 
 function CourseDetails() {
   const { id } = useParams();
   const { user } = useContext(UsersContext);
+  const navigate = useNavigate();
+  const userIdShortened = user.id.slice(0, 5);
 
   const [fetchError, setFetchError] = useState(null);
   const [title, setTitle] = useState("");
@@ -157,6 +159,7 @@ function CourseDetails() {
           console.log(error);
         } else {
           console.log("Course enrolled successfully");
+          navigate(`/${userIdShortened}/${id}`);
         }
       }
     }

@@ -12,11 +12,10 @@ import {
   ListGroupItem,
 } from "react-bootstrap";
 import supabase from "../config/supabaseClient";
-import { useNavigate } from "react-router-dom";
 import { UsersContext } from "../store/UsersContext";
 import Skills from "../FixedComponent/Skills";
-import { Link } from "react-router-dom";
-import "../Style.css"
+import { Link, useNavigate } from "react-router-dom";
+import "../Style.css";
 
 const ProfilePage = () => {
   const { user } = useContext(UsersContext);

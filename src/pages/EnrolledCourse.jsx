@@ -4,6 +4,7 @@ import supabase from "../config/supabaseClient";
 import { useParams, useNavigate } from "react-router-dom";
 import { Container, Row, Col, ListGroup, Button } from "react-bootstrap";
 import Comments from "../components/Comments";
+import AddComments from "../components/AddComments";
 
 function EnrolledCourse() {
   const { user } = useContext(UsersContext);
@@ -34,7 +35,9 @@ function EnrolledCourse() {
       } else {
         setCourseContent(data[0].course_content || []);
         setQuizLink(data[0].final_quiz);
-        setCompletedItems(Array(data[0].course_content.length).fill(false));
+        if (completedItems.length === 0) {
+          setCompletedItems(Array(data[0].course_content.length).fill(false));
+        }
       }
     };
 
@@ -54,7 +57,7 @@ function EnrolledCourse() {
 
     fetchCourse();
     fetchSpecificCourse();
-  }, [user, courseId, navigate]);
+  }, [user, courseId, navigate, completedItems, courseComments]);
 
   const handleCheckboxChange = (index) => {
     const newCompletedItems = [...completedItems];
@@ -68,7 +71,7 @@ function EnrolledCourse() {
     <Container className="my-5">
       <h1>{courseName}</h1>
       <Row>
-        <Col md={8}>
+        <Col md={8} xs={12}>
           {courseContent.map((module, index) => (
             <div key={index}>
               <h2 className="my-4">{module.title}</h2>
@@ -77,7 +80,7 @@ function EnrolledCourse() {
             </div>
           ))}
         </Col>
-        <Col md={4}>
+        <Col md={4} xs={12}>
           <ListGroup>
             {courseContent ? (
               courseContent.map((module, index) => (
@@ -114,6 +117,7 @@ function EnrolledCourse() {
       </Row>
 
       {/* Comments  */}
+      <AddComments />
       <Comments courseComments={courseComments} />
     </Container>
   );
