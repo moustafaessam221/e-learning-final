@@ -37,15 +37,65 @@ function Footer() {
               </a>
             </div>
           </Col>
-          {isMobile ? (
-            null
-          ): (
-            <Col  style={{ minWidth: "200px" }} xs={12} md={3}>
-            <h5>EduSpace</h5>
-            <Nav.Link as={Link} to="/about">About</Nav.Link>
-            <Nav.Link as={Link} to="/contact">Contact</Nav.Link>
-            <Nav.Link as={Link} to="/">Home</Nav.Link>
-          </Col>
+          {isMobile ? null : (
+            <>
+             
+              <Col  md={2}>
+                <h5>EduSpace</h5>
+                <Nav.Link as={Link} to="/about">
+                  About
+                </Nav.Link>
+                <Nav.Link as={Link} to="/contact">
+                  Contact
+                </Nav.Link>
+                <Nav.Link as={Link} to="/">
+                  Home
+                </Nav.Link>
+                <Nav.Link as={Link} to="/">
+                Get the app
+                </Nav.Link>
+                <Nav.Link as={Link} to="/">
+                Business
+                </Nav.Link>
+              </Col>
+
+           
+              <Col  md={2}>
+                <h5>Company</h5>
+                <Nav.Link as={Link} to="/career">
+                  Careers
+                </Nav.Link>
+                <Nav.Link as={Link} to="/blog">
+                  Blog
+                </Nav.Link>
+                <Nav.Link as={Link} to="/help">
+                  Help and support
+                </Nav.Link>
+                <Nav.Link as={Link} to="/investor">
+                  Investors
+                </Nav.Link>
+              </Col>
+
+            
+              <Col  md={2}>
+                <h5>Licenes</h5>
+                <Nav.Link as={Link} to="/">
+                  Terms
+                </Nav.Link>
+                <Nav.Link as={Link} to="/">
+                  Privacy Policy
+                </Nav.Link>
+                <Nav.Link as={Link} to="/">
+                  Cookie settings
+                </Nav.Link>
+                <Nav.Link as={Link} to="/">
+                  Sitemap
+                </Nav.Link>
+                <Nav.Link as={Link} to="/">
+                Accessibility statement
+                </Nav.Link>
+              </Col>
+            </>
           )}
           <Col className="p-20 mx-4" style={{ minWidth: "200px" }}>
             <h5 className="mb-3">Contact us</h5>
