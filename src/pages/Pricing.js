@@ -51,14 +51,14 @@ const PricingCard = () => {
       } else {
         console.log(data);
         setSubscription(type);
-        alert(`${type} Subscription Activated`);
+        alert (type + "subscirption activaited")
       }
     }
   };
 
   return (
     <Container className="mt-5">
-      <Row className="text-center mb-5 d-flex flex-row container">
+      <Row className="text-center mb-5 d-flex flex-row justify-content-center">
         <Card.Title as="h3" className="pricing-title p-5">
           Choose Your Plan
         </Card.Title>
@@ -127,8 +127,7 @@ const PricingCard = () => {
                 <p>$50/month</p>
                 <p>
                   <h6>Description</h6> Enjoy full access to all of our courses
-                  on a flexible monthly basis. Perfect if you're looking for a
-                  short-term commitment.
+                  on a flexible monthly basis.
                 </p>
                 <ul className="list-unstyled feature-list">
                   <li>

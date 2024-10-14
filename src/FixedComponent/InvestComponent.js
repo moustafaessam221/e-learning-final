@@ -1,26 +1,32 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import { FaMoneyBillAlt, FaUsers, FaCertificate } from "react-icons/fa"; // You can replace these with your icons or use react-icons
+import { FaMoneyBillAlt, FaUsers, FaCertificate } from "react-icons/fa";
+import "../Style.css"; 
 
 function InvestComponent() {
   return (
-    <Container className="text-center py-5">
-      <h2 className="mb-5">Invest in your career with EduSpace Plus</h2>
+    <Container className="invest-container text-center py-5">
+     
       <Row className="mt-5">
-        <Col md={4} className="mb-4">
-          <FaMoneyBillAlt size={50} className="mb-3" />
-          <h4>Save Money</h4>
-          <p>Spend less money on your learning.</p>
+      <h2 className="invest-heading mb-5">
+        Invest in your career with EduSpace Plus
+      </h2>
+        <Col xs={12} sm={6} md={4} className="mb-4">
+          <FaMoneyBillAlt className="invest-icon mb-3" />
+          <h4 className="invest-title">Save Money</h4>
+          <p className="invest-description">Spend less money on your learning.</p>
         </Col>
-        <Col md={4} className="mb-4">
-          <FaUsers size={50} className="mb-3" />
-          <h4>Countless Classes</h4>
-          <p>Thousands of creative classes. Beginner to pro.</p>
+        <Col xs={12} sm={6} md={4} className="mb-4">
+          <FaUsers className="invest-icon mb-3" />
+          <h4 className="invest-title">Countless Classes</h4>
+          <p className="invest-description">Thousands of creative classes. Beginner to pro.</p>
         </Col>
-        <Col md={4} className="mb-4">
-          <FaCertificate size={50} className="mb-3" />
-          <h4>Certificates</h4>
-          <p>Earn a certificate for every completed learning program.</p>
+        <Col xs={12} sm={6} md={4} className="mb-4">
+          <FaCertificate className="invest-icon mb-3" />
+          <h4 className="invest-title">Certificates</h4>
+          <p className="invest-description">
+            Earn a certificate for every completed learning program.
+          </p>
         </Col>
       </Row>
     </Container>
