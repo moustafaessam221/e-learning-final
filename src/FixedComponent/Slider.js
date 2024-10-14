@@ -1,8 +1,8 @@
 import React from "react";
 import Carousel from "react-bootstrap/Carousel";
-import CaroImage2 from "../images/CaroImage2.jpg";
-import CaroImage from "../images/CaroImage.jpg";
-import CaroImage4 from "../images/CaroImage4.jpg";
+import CaroImage2 from "../images/AIBanner.jpg";
+import CaroImage from "../images/MarketingBanner.jpg";
+import CaroImage4 from "../images/FrontEndBanner.jpg";
 
 function CarouselComponent() {
   return (
@@ -23,10 +23,10 @@ function CarouselComponent() {
             alt="Image Two"
             style={{ height: "600px", objectFit: "cover" }}
           />
-          <Carousel.Caption>
+          {/* <Carousel.Caption>
             <h3>Label for second slide</h3>
             <p>Sample Text for Image Two</p>
-          </Carousel.Caption>
+          </Carousel.Caption> */}
         </Carousel.Item>
 
         <Carousel.Item>
@@ -36,10 +36,10 @@ function CarouselComponent() {
             alt="Image One"
             style={{ height: "600px", objectFit: "cover" }}
           />
-          <Carousel.Caption>
+          {/* <Carousel.Caption>
             <h3>Label for first slide</h3>
             <p>Sample Text for Image One</p>
-          </Carousel.Caption>
+          </Carousel.Caption> */}
         </Carousel.Item>
         <Carousel.Item>
           <img
@@ -48,10 +48,10 @@ function CarouselComponent() {
             alt="Image One"
             style={{ height: "600px", objectFit: "cover" }}
           />
-          <Carousel.Caption>
+          {/* <Carousel.Caption>
             <h3>Label for first slide</h3>
             <p>Sample Text for Image One</p>
-          </Carousel.Caption>
+          </Carousel.Caption> */}
         </Carousel.Item>
       </Carousel>
     </div>
