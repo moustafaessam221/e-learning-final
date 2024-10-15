@@ -17,6 +17,8 @@ import AboutUs from "./pages/AboutUs";
 import AddCoursePage from "./pages/AddCoursePage";
 import { UsersContext } from "./store/UsersContext";
 import SearchResults from "./pages/SearchResults";
+import EnrolledCourse from "./pages/EnrolledCourse";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
   const [courses, setCourses] = useState([]);
@@ -53,7 +55,7 @@ function App() {
   return (
     <>
       <CoursesContext.Provider value={{ courses, fetchError }}>
-        <UsersContext.Provider value={{ user, setUser, logout }}>
+        <UsersContext.Provider value={{ user, setUser, role, setRole, logout }}>
           <BrowserRouter>
             <Navigationbar />
             <Routes>
@@ -68,6 +70,7 @@ function App() {
               <Route path="/about" element={<AboutUs />} />
               <Route path="/add-course" element={<AddCoursePage />} />
               <Route path="search" element={<SearchResults />} />
+              <Route path="dashboard" element={<Dashboard />} />
             </Routes>
             <Footer />
           </BrowserRouter>
