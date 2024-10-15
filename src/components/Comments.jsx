@@ -1,5 +1,6 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
+import "./Comments.css";
 
 function Comments({ courseComments }) {
   return (
@@ -8,10 +9,9 @@ function Comments({ courseComments }) {
         <h2 className="my-4">Comments:</h2>
         {courseComments ? (
           courseComments.map((comment, index) => (
-            <div key={index}>
-              <h6>{comment.userName}</h6>
-              <h5>{comment.comment}</h5>
-              <br />
+            <div key={index} className="comment">
+              <p className="comment-user">{comment.userName}</p>
+              <h5 className="comment-text">{comment.comment}</h5>
             </div>
           ))
         ) : (

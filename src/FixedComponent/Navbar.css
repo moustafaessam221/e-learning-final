@@ -1,0 +1,10 @@
+.custom-navbar {
+  background-color: red;
+  color: blue;
+}
+.custom-navText {
+    color: green;
+}
+.custom-navText:hover {
+    color: yellow;
+}
