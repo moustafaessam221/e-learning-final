@@ -58,6 +58,7 @@ function App() {
         <UsersContext.Provider value={{ user, setUser, role, setRole, logout }}>
           <BrowserRouter>
             <Navigationbar />
+            <main>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="courses" element={<Courses />} />
@@ -74,6 +75,7 @@ function App() {
               <Route path="/course/:id" element={<CourseDetails />} />
               <Route path="/:userId/:courseId" element={<EnrolledCourse />} />
             </Routes>
+            </main>
             <Footer />
           </BrowserRouter>
         </UsersContext.Provider>

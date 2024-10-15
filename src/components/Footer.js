@@ -33,7 +33,7 @@ function Footer() {
               <a href="#" className="me-3">
                 <FontAwesomeIcon icon={faFacebook} size="2x" />
               </a>
-              <a href="#">
+              <a href="#" className="me-3">
                 <FontAwesomeIcon icon={faLinkedin} size="2x" />
               </a>
             </div>

@@ -22,7 +22,7 @@ const Navigationbar = () => {
             alt="EduSpace Logo"
             style={{ height: "40px", marginRight: "10px" }}
           />
-          <Navbar.Brand style={{ fontSize: "1.5rem", fontWeight: "bold" }}>
+          <Navbar.Brand className="custom-navlogo" style={{ fontSize: "1.5rem", fontWeight: "bold" }}>
             EduSpace
           </Navbar.Brand>
         </Link>
@@ -55,7 +55,7 @@ const Navigationbar = () => {
           <Nav>
             {user ? (
               <>
-                <Nav.Link as={Link} to="/profile" className="custom-navText mx-2">
+                <Nav.Link as={Link} to="/profile" className="custom-navProfile mx-2">
                   <FaUser />
                 </Nav.Link>
                 <Nav.Link
@@ -68,7 +68,7 @@ const Navigationbar = () => {
                 </Nav.Link>
               </>
             ) : (
-              <Nav.Link as={Link} to="/login" className="text-white mx-2">
+              <Nav.Link as={Link} to="/login" className="custom-navText mx-2">
                 Login
               </Nav.Link>
             )}

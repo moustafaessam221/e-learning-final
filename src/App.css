@@ -43,3 +43,6 @@
 body {
   overflow-x: hidden;
 }
+main {
+  margin-top: 80px;
+}
