@@ -71,6 +71,8 @@ function App() {
               <Route path="/add-course" element={<AddCoursePage />} />
               <Route path="search" element={<SearchResults />} />
               <Route path="dashboard" element={<Dashboard />} />
+              <Route path="/course/:id" element={<CourseDetails />} />
+              <Route path="/:userId/:courseId" element={<EnrolledCourse />} />
             </Routes>
             <Footer />
           </BrowserRouter>
