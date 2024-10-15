@@ -20,7 +20,7 @@ function CourseDetails() {
   const { id } = useParams();
   const { user } = useContext(UsersContext);
   const navigate = useNavigate();
-  const userIdShortened = user ? user.id.slice(0, 5): null;
+  const userIdShortened = user ? user.id.slice(0, 5) : null;
 
   const [fetchError, setFetchError] = useState(null);
   const [title, setTitle] = useState("");
@@ -127,7 +127,7 @@ function CourseDetails() {
       // add enrolled course to enrolled_courses table
       const { data: courseData, error: courseFetchingError } = await supabase
         .from("courses")
-        .select('content, quiz')
+        .select("content, quiz")
         .eq("id", id)
         .single();
       if (courseFetchingError) {
@@ -198,15 +198,18 @@ function CourseDetails() {
               </h4>
             </div>
             <p className="mt-3 fs-5">Categories: {categories.join(", ")}</p>
-            <Button
-              className="btn-lg"
-              variant="primary"
-              style={{ width: "200px", height: "63px" }}
-              onClick={handleEnroll}
-              disabled={enrolled}
-            >
-              {buttonText}
-            </Button>
+            <Container className="d-flex flex-wrap justify-content-start gap-5 p-0">
+              <Button
+                className="btn-lg"
+                variant="primary"
+                style={{ width: "200px", height: "63px" }}
+                onClick={handleEnroll}
+                disabled={enrolled}
+              >
+                {buttonText}
+              </Button>
+              <p className="mt-3 fs-5">Enrolled students: {views}</p>
+            </Container>
           </Col>
           <Col lg={5} className="border border-dark pt-4 px-0">
             <Container className="p-0 text-start">

@@ -17,6 +17,15 @@ function TopCourses() {
     setTopCourses(sortedCourses);
   }, [courses]);
 
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-GB', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+    });
+  }
+
   return (
     <Container fluid className="my-5 p-0 ">
       <div className="px-5 d-flex justify-content-between w-100">
@@ -44,6 +53,7 @@ function TopCourses() {
             views={course.views}
             author={course.author}
             category={course.category}
+            createdAt={formatDate(course.created_at)}
           />
         ))}
       </Row>

@@ -1,8 +1,30 @@
+import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom";
 
-function CoursesCard({ title, rating, price, views, id, author, createdAt, description, category }) {
+function CoursesCard({
+  title,
+  rating,
+  price,
+  views,
+  id,
+  author,
+  createdAt,
+  description,
+  category,
+}) {
+  const renderStars = (rating) => {
+    const totalStars = 5;
+    return Array.from({ length: totalStars }, (_, index) => (
+      <FontAwesomeIcon
+        key={index}
+        icon={faStar}
+        color={index < rating ? "gold" : "lightgray"}
+      />
+    ));
+  };
   return (
     <Card
       style={{
@@ -12,10 +34,7 @@ function CoursesCard({ title, rating, price, views, id, author, createdAt, descr
         margin: "10px auto",
       }}
     >
-      <Card.Img
-        variant="top"
-        src="https://placehold.co/300"
-      />
+      <Card.Img variant="top" src="https://placehold.co/300" />
       <Card.Body>
         <Card.Title style={{ fontSize: "18px" }}>
           {" "}
@@ -25,9 +44,9 @@ function CoursesCard({ title, rating, price, views, id, author, createdAt, descr
           {" "}
           {author}
           <br />
-          Rating: {rating}
+          Rating: {rating} {renderStars(rating)}
           <br />
-          {price? `Price: ${price}` : "Free"}
+          {price ? `Price: ${price}` : "Free"}
           <br />
           {createdAt && (
             <small className="text-muted">Added in: {createdAt}</small>

@@ -9,15 +9,16 @@ import { Button, Col, Container, Form, Nav, Row } from "react-bootstrap";
 import EduSpaceLogo from "../images/EduSpaceLogo.png";
 import { Link } from "react-router-dom";
 import { useMediaQuery } from "usehooks-ts";
+import "./Footer.css";
 
 function Footer() {
   const isMobile = useMediaQuery("(max-width: 768px)");
 
   return (
-    <footer className="bg-dark text-white pt-5 pb-3 mt-5">
+    <footer className="custom-footer pt-5 pb-3 mt-5">
       <Container>
         <Row className=" flex-wrap">
-          <Col className="p-20 mx-4 mb-3" style={{ minWidth: "200px" }}>
+          <Col className={isMobile ? "p-20 mx-4 mb-3 text-center" : "p-20 mx-4 mb-3"} style={{ minWidth: "200px" }}>
            <div>
            <img
            className='footer-logo mx-3'
@@ -26,13 +27,13 @@ function Footer() {
           />
            </div>
             <div className='mt-4'>
-              <a href="#" className="text-white me-3">
+              <a href="#" className="me-3">
                 <FontAwesomeIcon icon={faXTwitter} size="2x" />
               </a>
-              <a href="#" className="text-white me-3">
+              <a href="#" className="me-3">
                 <FontAwesomeIcon icon={faFacebook} size="2x" />
               </a>
-              <a href="#" className="text-white">
+              <a href="#">
                 <FontAwesomeIcon icon={faLinkedin} size="2x" />
               </a>
             </div>
@@ -97,7 +98,7 @@ function Footer() {
               </Col>
             </>
           )}
-          <Col className="p-20 mx-4" style={{ minWidth: "200px" }}>
+          {/* <Col className="p-20 mx-4" style={{ minWidth: "200px" }}>
             <h5 className="mb-3">Contact us</h5>
             <Form>
               <Form.Group controlId="formEmail">
@@ -117,7 +118,7 @@ function Footer() {
               </Form.Group>
               <Button type="submit" className="mt-2">Submit</Button>
             </Form>
-          </Col>
+          </Col> */}
         </Row>
       </Container>
       <div className="text-center mt-4">
