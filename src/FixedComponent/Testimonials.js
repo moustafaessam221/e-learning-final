@@ -4,9 +4,9 @@ import { Container, Row, Col, Card } from "react-bootstrap";
 const Testimonials = () => {
   return (
     <Container className="mt-5">
-      <h2 className="text-center mb-4">Why Students Love EduSpace</h2>
 
       <Row className="d-flex justify-content-center">
+      <h2 className="text-center mb-4 invest-heading">Why Students Love EduSpace</h2>
         <Col md={5} className="mb-3">
           <Card className="text-center p-3 shadow">
             <Card.Body>

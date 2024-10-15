@@ -12,16 +12,17 @@ import { faBarsProgress } from "@fortawesome/free-solid-svg-icons/faBarsProgress
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useContext, useEffect, useState } from "react";
 import { Button, Card, Col, Container, Image, Row } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import supabase from "../config/supabaseClient";
 import { UsersContext } from "../store/UsersContext";
 
 function CourseDetails() {
   const { id } = useParams();
   const { user } = useContext(UsersContext);
+  const navigate = useNavigate();
+  const userIdShortened = user ? user.id.slice(0, 5): null;
 
   const [fetchError, setFetchError] = useState(null);
-  const [CourseDetails, setCourseDetails] = useState(null);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
@@ -32,6 +33,15 @@ function CourseDetails() {
   const [author, setAuthor] = useState("");
   const [categories, setCategories] = useState([]);
   const [enrolled, setEnrolled] = useState(false);
+
+  let buttonText;
+  if (enrolled) {
+    buttonText = "Enrolled";
+  } else if (price) {
+    buttonText = `Enroll for ${price} $`;
+  } else {
+    buttonText = "Free";
+  }
 
   useEffect(() => {
     const fetchCourse = async () => {
@@ -63,7 +73,10 @@ function CourseDetails() {
     };
 
     const checkEnrollment = async () => {
-      if (!user) return;
+      if (user?.id === undefined) {
+        setEnrolled(false);
+        return;
+      }
 
       const { data, error } = await supabase
         .from("profile")
@@ -84,10 +97,11 @@ function CourseDetails() {
     checkEnrollment();
   }, [id]);
 
-  // Check if user is enrolled
-
-  // handle course enrollment
+  // enroll function
   const handleEnroll = async () => {
+    let course_content = [];
+    let final_quiz;
+
     if (!user) {
       // will alerts be replaced with toasts?
       alert("Please login first");
@@ -105,12 +119,25 @@ function CourseDetails() {
 
     if (data) {
       const currentCourses = data.courses || [];
-
       if (currentCourses.includes(id)) {
         alert("Course already enrolled");
         return;
       }
 
+      // add enrolled course to enrolled_courses table
+      const { data: courseData, error: courseFetchingError } = await supabase
+        .from("courses")
+        .select('content, quiz')
+        .eq("id", id)
+        .single();
+      if (courseFetchingError) {
+        console.log(courseFetchingError);
+      } else {
+        course_content = courseData.content;
+        final_quiz = courseData.quiz;
+      }
+
+      // add course to user profile
       const updatedCourses = [...currentCourses, id];
       const { error } = await supabase
         .from("profile")
@@ -121,6 +148,22 @@ function CourseDetails() {
       } else {
         alert("Course enrolled successfully");
         setEnrolled(true);
+        const { data, error } = await supabase
+          .from("enrolled_courses")
+          .insert({
+            user_id: user.id,
+            course_id: id,
+            course_content: course_content,
+            final_quiz: final_quiz,
+          })
+          .single();
+
+        if (error) {
+          console.log(error);
+        } else {
+          console.log("Course enrolled successfully");
+          navigate(`/${userIdShortened}/${id}`);
+        }
       }
     }
   };
@@ -146,8 +189,8 @@ function CourseDetails() {
             <h1 className="">{title}</h1>
             <p className="mt-4 fs-5 w-75">{description}</p>
             <div
-              style={{ width: "20rem" }}
-              className="d-flex flex-wrap align-items-center justify-content-between gap-5"
+              style={{ width: "200px" }}
+              className="d-flex flex-wrap align-items-center justify-content-between gap-3"
             >
               <h3>{price ? `Price: ${price} $` : "Free"}</h3>
               <h4 className="fs-5">
@@ -158,9 +201,11 @@ function CourseDetails() {
             <Button
               className="btn-lg"
               variant="primary"
-              style={{ width: "20rem", height: "63px" }}
+              style={{ width: "200px", height: "63px" }}
+              onClick={handleEnroll}
+              disabled={enrolled}
             >
-              {price ? "Enroll now" : "Enroll for Free"}
+              {buttonText}
             </Button>
           </Col>
           <Col lg={5} className="border border-dark pt-4 px-0">
@@ -327,11 +372,11 @@ function CourseDetails() {
         <Button
           className="btn-lg"
           variant="primary"
-          style={{ width: "20rem", height: "63px" }}
+          style={{ width: "200px", height: "63px" }}
           onClick={handleEnroll}
           disabled={enrolled}
         >
-          {enrolled ? "Enrolled" : "Enroll Now"}
+          {buttonText}
         </Button>
       </Container>
 

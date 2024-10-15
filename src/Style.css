@@ -1,37 +1,171 @@
-.cards-height {
-  height: 100px;
-  width: 400px;
 
-  margin-bottom: 20px;
-}
 .mb-5 {
   margin-bottom: 5rem;
- 
 }
-
 
 .custom-dropdown-width {
   width: 13rem;
-  height: 60px; 
-  
+  height: 60px;
+
   border: 1px solid rgb(108, 106, 106);
 }
-
-
+/* 
 @media (max-width: 430px) and (min-width: 320px) {
- 
-
   .custom-dropdown-width {
-    width: 100%; 
-
+    width: 100%;
   }
   .cards-height {
-    margin-left: 100px
+    margin-left: 100px;
   }
-  .container{
+  .pricing-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    
+  }
+} */
+.pricing-title {
+  color: #333;
+}
+
+.pricing-icon {
+  display: flex;
+  justify-content: center;
+}
+
+.pricing-icon-large {
+  font-size: 3rem;
+  color: blue;
+}
+
+.plan-title {
+  color: orange;
+  font-weight: bold;
+}
+
+.feature-list {
+  padding-left: 0;
+}
+
+.feature-list li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.check-icon {
+  color: lightgreen;
+  margin-right: 10px;
+}
+
+.times-icon {
+  color: red;
+  margin-right: 10px;
+}
+.profile-img {
+  cursor: pointer;
+  width: 250px;
+  height: 250px;
+  object-fit: cover;
+}
+
+/* 
+.invest-container {
+  padding: 0 15px;
+}
+
+.invest-heading {
+  font-size: 1.5rem;
+  word-wrap: break-word;
+  text-align: center;
+} */
+
+.invest-icon {
+  font-size: 35px;
+  margin-bottom: 10px;
+}
+/* 
+.invest-title {
+  font-size: 1.25rem;
+  text-align: center;
+} */
+
+/* .invest-description {
+  font-size: 0.875rem;
+  text-align: center;
+} */
+
+/* Invest responsive media */
+@media (max-width: 320px) {
+  .invest-heading {
+    font-size: 1.25rem;
+    line-height: 1.2;
+  }
+
+  .invest-title {
+    font-size: 1.1rem;
+  }
+
+  .invest-description {
+    font-size: 0.8rem;
+  }
+
+  .invest-container {
+    padding: 0 10px;
+  }
+
+  .mb-4 {
+    margin-bottom: 20px !important;
   }
 }
+
+/* ----------- */
+
+/* @media (max-width: 320px) {
+  .pricing-container {
+    max-width: 100%; 
+    padding: 0 15px; 
+  }
+  
+  .cards-height {
+    height: auto; 
+    margin: 0 auto; 
+    width: 90%; 
+    max-width: 350px; 
+  }
+  .pricing-title {
+    font-size: 1.5rem; 
+    padding: 1.5rem 0;
+  }
+
+  .subscribe-card, 
+  .subscription-card {
+    width: 90%; 
+    max-width: 300px; 
+    margin: 0 auto 1.5rem auto; 
+  }
+
+  .plan-title {
+    font-size: 1.2rem; 
+  }
+
+  .feature-list {
+    font-size: 0.9rem;
+  }
+
+  .btn {
+    font-size: 0.8rem; 
+    padding: 0.5rem 1rem;
+  }
+} */
+
+/* .subscribe-card {
+  height: 510px;
+  position: relative;
+  button {
+    position: absolute;
+    transform: translateX(-50%);
+    bottom: 50px;
+    width: 10rem;
+   
+  }
+} */

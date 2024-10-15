@@ -1,17 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { Dropdown } from "react-bootstrap";
 import { useContext } from "react";
-import {Container} from "bootstrap";
+import { Container } from "bootstrap";
 import { CoursesContext } from "../store/CourseContext";
-import "../Style.css"
+import "../Style.css";
 
-
-
-function Filters({ handleSelect, selectCategory, handlePrice, handleSort, handleRating, coursesPrice, selectedRating, stars,sortCriteria}) {
+function Filters({
+  handleSelect,
+  selectCategory,
+  handlePrice,
+  handleSort,
+  handleRating,
+  coursesPrice,
+  selectedRating,
+  stars,
+  sortCriteria,
+}) {
   const [coursesCategories, setCoursesCategories] = useState([]);
 
   const { courses } = useContext(CoursesContext);
-
 
   function removeDuplicates(arr) {
     return arr.filter((item, index) => arr.indexOf(item) === index);
@@ -28,14 +35,22 @@ function Filters({ handleSelect, selectCategory, handlePrice, handleSort, handle
   }, [courses]);
 
   return (
-    <div class="d-flex flex-wrap container justify-content-between mt-5 mb-5" >
+    <div className="d-flex flex-wrap container justify-content-between mt-5 mb-5">
       {/* Category Dropdown */}
-      <Dropdown onSelect={(eventKey) => handleSelect(eventKey)}  >
-        <Dropdown.Toggle  id="dropdown-basic" className="custom-dropdown-width mb-1" style={{backgroundColor:"white",color:"black",border:"1px solid rgb(108, 106, 106)"}}>
+      <Dropdown onSelect={(eventKey) => handleSelect(eventKey)}>
+        <Dropdown.Toggle
+          id="dropdown-basic"
+          className="custom-dropdown-width mb-1"
+          style={{
+            backgroundColor: "white",
+            color: "black",
+            border: "1px solid rgb(108, 106, 106)",
+          }}
+        >
           {selectCategory === "ALL" ? "Category" : selectCategory}
         </Dropdown.Toggle>
 
-        <Dropdown.Menu >
+        <Dropdown.Menu>
           <Dropdown.Item eventKey="ALL">ALL</Dropdown.Item>
           {coursesCategories.map((category) => (
             <Dropdown.Item key={category} eventKey={category}>
@@ -46,8 +61,16 @@ function Filters({ handleSelect, selectCategory, handlePrice, handleSort, handle
       </Dropdown>
 
       {/* Price Dropdown */}
-      <Dropdown onSelect={(eventKey) => handlePrice(eventKey)} >
-        <Dropdown.Toggle  id="dropdown-basic" className="custom-dropdown-width mb-1" style={{backgroundColor:"white",color:"black",border:"1px solid rgb(108, 106, 106)"}}>
+      <Dropdown onSelect={(eventKey) => handlePrice(eventKey)}>
+        <Dropdown.Toggle
+          id="dropdown-basic"
+          className="custom-dropdown-width mb-1"
+          style={{
+            backgroundColor: "white",
+            color: "black",
+            border: "1px solid rgb(108, 106, 106)",
+          }}
+        >
           {coursesPrice === "All" ? "Price" : coursesPrice}
         </Dropdown.Toggle>
 
@@ -59,8 +82,16 @@ function Filters({ handleSelect, selectCategory, handlePrice, handleSort, handle
       </Dropdown>
 
       {/*Rating Dropdwon */}
-     <Dropdown onSelect={(eventKey) => handleRating(eventKey)} >
-        <Dropdown.Toggle  id="dropdown-basic" className="custom-dropdown-width mb-1" style={{backgroundColor:"white",color:"black",border:"1px solid rgb(108, 106, 106)"}}>
+      <Dropdown onSelect={(eventKey) => handleRating(eventKey)}>
+        <Dropdown.Toggle
+          id="dropdown-basic"
+          className="custom-dropdown-width mb-1"
+          style={{
+            backgroundColor: "white",
+            color: "black",
+            border: "1px solid rgb(108, 106, 106)",
+          }}
+        >
           {selectedRating === 0 ? "Rating" : stars}
         </Dropdown.Toggle>
 
@@ -75,8 +106,16 @@ function Filters({ handleSelect, selectCategory, handlePrice, handleSort, handle
       </Dropdown>
 
       {/*Sorting Dropdwon */}
-     <Dropdown onSelect={(eventKey) => handleSort(eventKey)} >
-        <Dropdown.Toggle  id="dropdown-basic" className="custom-dropdown-width mb-1" style={{backgroundColor:"white",color:"black",border:"1px solid rgb(108, 106, 106)"}}>
+      <Dropdown onSelect={(eventKey) => handleSort(eventKey)}>
+        <Dropdown.Toggle
+          id="dropdown-basic"
+          className="custom-dropdown-width mb-1"
+          style={{
+            backgroundColor: "white",
+            color: "black",
+            border: "1px solid rgb(108, 106, 106)",
+          }}
+        >
           {sortCriteria}
         </Dropdown.Toggle>
 
@@ -88,8 +127,7 @@ function Filters({ handleSelect, selectCategory, handlePrice, handleSort, handle
           <Dropdown.Item eventKey="Rating">Highest Rating</Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
-
-      </div>
+    </div>
   );
 }
 

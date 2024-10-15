@@ -2,7 +2,7 @@ import { React, useContext } from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import { FaUser } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import EduSpaceLogo from "../images/EduSpaceLogo.png";
+import EduSpaceLogo from "../images/EduSpaceLogo.png"; // استيراد الشعار
 import { UsersContext } from "../store/UsersContext";
 import Search from "./Search";
 

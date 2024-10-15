@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import {
   Container,
   Row,
@@ -8,14 +8,20 @@ import {
   Button,
   Modal,
   Form,
+  ListGroup,
+  ListGroupItem,
 } from "react-bootstrap";
 import supabase from "../config/supabaseClient";
-import { useNavigate } from "react-router-dom";
 import { UsersContext } from "../store/UsersContext";
 import Skills from "../FixedComponent/Skills";
+import { Link, useNavigate } from "react-router-dom";
+import "../Style.css";
 
 const ProfilePage = () => {
   const { user } = useContext(UsersContext);
+  const imgInputRef = useRef(null);
+  const userIdShortened = user.id.slice(0, 5);
+
   const [userData, setUserData] = useState(null);
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
@@ -30,36 +36,48 @@ const ProfilePage = () => {
   const [fieldValue, setFieldValue] = useState("");
   const [fieldTitle, setFieldTitle] = useState("");
   const [userSkills, setUserSkills] = useState([]);
-  const [userExperince, setUserExperince] = useState([]);
+  const [workHistory, setWorkHistory] = useState([]);
   const [userEducation, setUserEducation] = useState([]);
+  const [enrolledCourses, setEnrolledCourses] = useState([]);
+  const [image, setImage] = useState("https://via.placeholder.com/150");
 
   const navigate = useNavigate();
   useEffect(() => {
-    if (!user || !user.id) {
+    if (!user?.id) {
       navigate("/login");
       return;
     }
 
-    async function fetchProfile() {
+    const fetchProfile = async () => {
       const { data, error } = await supabase
         .from("profile")
         .select("*")
         .eq("id", user.id)
         .single();
-
       if (error) {
         console.log(error);
       } else {
-        setUserData(data);
-        setName(user.identities[0].identity_data.full_name);
+        // console.log(user)
+        setName(user.user_metadata.full_name);
+        setEmail(user.email);
+        setUserData({
+          ...data,
+          skills: data.skills || [],
+          experience: data.experience || [],
+          education: data.education || [],
+          workHistory: data.workHistory || [],
+          projects: data.projects || [],
+        });
+        setProjects(data.projects || []);
         setUserSkills(data.skills || []);
         setUserEducation(data.education || []);
-        setUserExperince(data.workHistory || []);
+        setWorkHistory(data.workHistory || []);
+        setCourses(data.courses || []);
+        setImage(data.avatar_url || "https://via.placeholder.com/150");
       }
-    }
-
+    };
     fetchProfile();
-  }, [user]);
+  }, [user, navigate, userData]);
 
   const handleShowModal = (field, title, currentValue) => {
     setCurrentField(field);
@@ -75,6 +93,7 @@ const ProfilePage = () => {
 
   // delete function
   const handleDeleteItem = async (field, skill) => {
+    console.log("This function is working fine!");
     const updatedArray = userData[field].filter((item) => item !== skill);
 
     const updates = { [field]: updatedArray };
@@ -87,7 +106,7 @@ const ProfilePage = () => {
     if (error) {
       console.log(error);
     } else {
-      setUserData({ ...userData, ...updates });
+      setUserData((prevData) => ({ ...prevData, [field]: updatedArray }));
     }
   };
 
@@ -112,21 +131,83 @@ const ProfilePage = () => {
     }
   };
 
+  // enrolled courses
+  useEffect(() => {
+    const fetchCourses = async () => {
+      if (courses.length > 0) {
+        const { data, error } = await supabase
+          .from("courses")
+          .select("*")
+          .in("id", courses);
+        if (error) console.log(error);
+        else setEnrolledCourses(data);
+      }
+    };
+    fetchCourses();
+  }, [courses]);
+
+  // image upload
+  const handleImageUpload = async (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const filePath = `public/${user.id}/${file.name}`;
+
+    // upload the image into storage
+    const { error } = await supabase.storage
+      .from("avatars")
+      .upload(filePath, file, { upsert: true });
+
+    if (error) {
+      console.log(error);
+      return;
+    } else {
+      console.log("File uploaded successfully");
+    }
+
+    // get the image URL
+    const { data } = supabase.storage.from("avatars").getPublicUrl(filePath);
+
+    const publicUrl = data.publicUrl;
+    if (!publicUrl) {
+      console.log("Error: public URL not found");
+      return;
+    } else {
+      // change the image in the database with the new URL
+      const { error } = await supabase
+        .from("profile")
+        .update({ avatar_url: publicUrl })
+        .eq("id", user.id);
+      if (error) {
+        console.log(error);
+      } else {
+        setImage(publicUrl);
+      }
+    }
+  };
+
   return (
     <Container className="my-5">
       <Row>
         <Col lg={4} className="mb-4">
           <Card>
             <Card.Body className="text-center">
+              <Form.Control
+                type="file"
+                hidden
+                ref={imgInputRef}
+                onChange={handleImageUpload}
+              />
               <Image
-                src="https://via.placeholder.com/150"
+                src={image}
                 roundedCircle
-                fluid
-                className="mb-3"
-                style={{ cursor: "pointer" }}
+                className="mb-3 profile-img"
+                onClick={() => imgInputRef.current.click()}
               />
               <h2 style={{ cursor: "pointer" }}>{name}</h2>
-              <p style={{ cursor: "pointer" }}>{email}</p>
+              <p style={{ cursor: "pointer" }} className="text-muted fs-5">
+                {email}
+              </p>
               <p
                 style={{ cursor: "pointer" }}
                 onClick={() => handleShowModal("bio", "Short Bio", bio)}
@@ -174,16 +255,22 @@ const ProfilePage = () => {
               Courses in Progress
             </Card.Header>
             <Card.Body>
-              {courses.length === 0 ? (
+              {enrolledCourses.length === 0 ? (
                 <p className="text-muted">
-                  No courses added yet. Start adding your courses!
+                  No courses added yet. Add courses to track your progress!
                 </p>
               ) : (
-                <ul>
-                  {courses.map((course, index) => (
-                    <li key={index}>{course}</li>
+                <ListGroup>
+                  {enrolledCourses.map((course, index) => (
+                    <ListGroupItem
+                      key={index}
+                      as={Link}
+                      to={`/${userIdShortened}/${course.id}`}
+                    >
+                      {course.title}
+                    </ListGroupItem>
                   ))}
-                </ul>
+                </ListGroup>
               )}
             </Card.Body>
           </Card>
@@ -210,11 +297,15 @@ const ProfilePage = () => {
                   No projects added yet. Showcase your work by adding projects!
                 </p>
               ) : (
-                <ul>
+                <div>
                   {projects.map((project, index) => (
-                    <li key={index}>{project}</li>
+                    <Skills
+                      key={index}
+                      skill={project}
+                      deleteItem={() => handleDeleteItem("projects", project)}
+                    />
                   ))}
-                </ul>
+                </div>
               )}
             </Card.Body>
           </Card>
@@ -240,13 +331,13 @@ const ProfilePage = () => {
               </Button>
             </Card.Header>
             <Card.Body>
-              {userExperince.length === 0 ? (
+              {workHistory.length === 0 ? (
                 <p className="text-muted">
                   No work experience added yet. Add your work experience!
                 </p>
               ) : (
                 <div>
-                  {userExperince.map((exp, index) => (
+                  {workHistory.map((exp, index) => (
                     <Skills
                       key={index}
                       skill={exp}
