@@ -65,8 +65,8 @@ const PricingCard = () => {
 
         {/* Free Access */}
 
-        <Col lg={4} md={4} sm={10} className="mb-4 subscribe-card">
-          <Card className="h-100 cards-height">
+        <Col lg={4} md={4} sm={10} className="mb-4">
+          <Card className="h-100 mb-2">
             <Card.Body>
               <div className="mb-4">
                 <div className="pricing-icon mb-3">
@@ -113,8 +113,8 @@ const PricingCard = () => {
 
         {/* Monthly Access */}
 
-        <Col lg={4} md={4} sm={10} className="mb-4 subscribe-card">
-          <Card className="h-100 cards-height">
+        <Col lg={4} md={4} sm={10} className="mb-4">
+          <Card className="h-100 mb-2">
             <Card.Body>
               <div className="mb-4">
                 <div className="pricing-icon mb-3">
@@ -161,7 +161,7 @@ const PricingCard = () => {
 
         {/* Yearly Access */}
         <Col lg={4} md={4} sm={10} className="mb-4 subscription-card">
-          <Card className="h-100 cards-height">
+          <Card className="h-100 mb-2">
             <Card.Body>
               <div className="mb-4">
                 <div className="pricing-icon mb-3">

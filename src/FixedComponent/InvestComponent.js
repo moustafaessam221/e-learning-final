@@ -22,7 +22,7 @@ function InvestComponent() {
           <p className="invest-description">Thousands of creative classes. Beginner to pro.</p>
         </Col>
         <Col xs={12} sm={6} md={4} className="mb-4">
-          <FaCertificate className="invest-icon mb-3" />
+          <FaCertificate className="invest-icon mb-3"/>
           <h4 className="invest-title">Certificates</h4>
           <p className="invest-description">
             Earn a certificate for every completed learning program.
