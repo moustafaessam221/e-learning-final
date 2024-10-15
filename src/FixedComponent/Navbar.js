@@ -1,13 +1,14 @@
 import { React, useContext } from "react";
-import { Container, Nav, Navbar, Form, Button } from "react-bootstrap";
-import { FaShoppingCart, FaUser, FaSearch } from "react-icons/fa"; // إضافة أيقونة البحث
+import { Container, Nav, Navbar } from "react-bootstrap";
+import { FaUser } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import EduSpaceLogo from "../images/EduSpaceLogo.png"; // استيراد الشعار
+import EduSpaceLogo from "../images/EduSpaceLogo.png";
 import { UsersContext } from "../store/UsersContext";
 import Search from "./Search";
 
 const Navigationbar = () => {
   const { user, logout } = useContext(UsersContext);
+
   return (
     <Navbar bg="primary" variant="dark" expand="lg" className="py-3">
       <Container fluid>
@@ -32,22 +33,25 @@ const Navigationbar = () => {
               Home
             </Nav.Link>
             <Nav.Link className="text-white" as={Link} to="/about">
-              About
+              About Us
             </Nav.Link>
             <Nav.Link className="text-white" as={Link} to="/courses">
               Courses
             </Nav.Link>
             <Nav.Link className="text-white" as={Link} to="/contact">
-              Contact
+              Contact Us
             </Nav.Link>
+
+            {user?.role === "admin" && (
+              <Nav.Link className="text-white" as={Link} to="/Dashboard">
+                Admin Dashboard
+              </Nav.Link>
+            )}
           </Nav>
 
           <Search />
 
           <Nav>
-            <Nav.Link as={Link} to="/cart" className="text-white mx-2">
-              <FaShoppingCart />
-            </Nav.Link>
             {user ? (
               <>
                 <Nav.Link as={Link} to="/profile" className="text-white mx-2">

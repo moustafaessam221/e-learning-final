@@ -46,17 +46,29 @@ export default function Signup() {
         return;
       }
 
-      setMsg("Signup successful!.Please Check your email for verification");
-      setLoading(false);
-      setEmail("");
-      setName("");
-      setPassword("");
-      setConfirmPassword("");
+      if (data.user) {
+        await supabase.from("profile").insert([
+          {
+            full_name: name,
+            id: data.user.id,
+            email: email,
+            role: "student",
+          },
+        ]);
+
+        setMsg("Signup successful!. Please check your email for verification.");
+        setLoading(false);
+        setEmail("");
+        setName("");
+        setPassword("");
+        setConfirmPassword("");
+      }
     } catch (error) {
       setErrorMsg("Something went wrong. Please try again.");
       setLoading(false);
     }
   };
+
   return (
     <>
       <Row className="flex justify-content-center  my-5">

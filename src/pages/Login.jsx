@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { Card, Form, Alert, Button, Row, Col } from "react-bootstrap";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebookF, faGoogle } from "@fortawesome/free-brands-svg-icons";
 import AuthCardButton from "../FixedComponent/AuthCardButton";
 import supabase from "../config/supabaseClient";
@@ -10,27 +9,12 @@ import { UsersContext } from "../store/UsersContext";
 
 export default function Login() {
   const Navigate = useNavigate();
-
-  const { setUser } = useContext(UsersContext);
+  const { setUser, setRole } = useContext(UsersContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [msg, setMsg] = useState("");
   const [loading, setLoading] = useState(false);
-
-  //TO BE COMPLETED
-  async function signInWithGoogle() {
-    const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-    });
-    if (error) {
-      setErrorMsg(error.message);
-    }
-    if (data.user) {
-      setUser(data.user);
-      localStorage.setItem("user", JSON.stringify(data.user));
-    }
-  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -57,14 +41,35 @@ export default function Login() {
       }
 
       if (data.user) {
-        setUser(data.user);
-        localStorage.setItem("user", JSON.stringify(data.user));
+        const { data: profileData, error: profileError } = await supabase
+          .from("profile")
+          .select("role")
+          .eq("id", data.user.id)
+          .single();
+
+        if (profileError) {
+          setErrorMsg(profileError.message);
+          setLoading(false);
+          return;
+        }
+
+        const userWithRole = { ...data.user, role: profileData.role };
+
+        setUser(userWithRole);
+        setRole(profileData.role);
+        localStorage.setItem("user", JSON.stringify(userWithRole));
+
+        setMsg("Login successful!");
+        setLoading(false);
+        setEmail("");
+        setPassword("");
+
+        if (profileData.role === "admin") {
+          Navigate("/Dashboard");
+        } else {
+          Navigate("/profile");
+        }
       }
-      setMsg("Login successful!");
-      setLoading(false);
-      setEmail("");
-      setPassword("");
-      Navigate("/profile");
     } catch (error) {
       setErrorMsg("Something went wrong. Please try again.");
       setLoading(false);
@@ -137,7 +142,6 @@ export default function Login() {
               description="Continue with Facebook"
             />
             <AuthCardButton
-              callback={signInWithGoogle}
               backgroundColor="danger"
               icon={faGoogle}
               description="Continue with Google"
