@@ -57,7 +57,7 @@ const PricingCard = () => {
   };
 
   return (
-    <Container className="mt-5">
+    <Container className="mt-5 pricing-container">
       <Row className="text-center mb-5 d-flex flex-row justify-content-center">
         <Card.Title as="h3" className="pricing-title p-5">
           Choose Your Plan

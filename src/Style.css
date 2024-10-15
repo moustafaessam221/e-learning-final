@@ -22,7 +22,7 @@
   .cards-height {
     margin-left: 100px;
   }
-  .container {
+  .pricing-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -142,7 +142,7 @@
 
 
 @media (max-width: 320px) {
-  .container {
+  .pricing-container {
     max-width: 100%; 
     padding: 0 15px; 
   }

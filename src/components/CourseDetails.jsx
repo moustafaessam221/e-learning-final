@@ -20,7 +20,7 @@ function CourseDetails() {
   const { id } = useParams();
   const { user } = useContext(UsersContext);
   const navigate = useNavigate();
-  const userIdShortened = user.id.slice(0, 5);
+  const userIdShortened = user ? user.id.slice(0, 5): null;
 
   const [fetchError, setFetchError] = useState(null);
   const [title, setTitle] = useState("");
@@ -73,7 +73,10 @@ function CourseDetails() {
     };
 
     const checkEnrollment = async () => {
-      if (!user) return;
+      if (user?.id === undefined) {
+        setEnrolled(false);
+        return;
+      }
 
       const { data, error } = await supabase
         .from("profile")
@@ -186,8 +189,8 @@ function CourseDetails() {
             <h1 className="">{title}</h1>
             <p className="mt-4 fs-5 w-75">{description}</p>
             <div
-              style={{ width: "20rem" }}
-              className="d-flex flex-wrap align-items-center justify-content-between gap-5"
+              style={{ width: "200px" }}
+              className="d-flex flex-wrap align-items-center justify-content-between gap-3"
             >
               <h3>{price ? `Price: ${price} $` : "Free"}</h3>
               <h4 className="fs-5">
@@ -198,7 +201,7 @@ function CourseDetails() {
             <Button
               className="btn-lg"
               variant="primary"
-              style={{ width: "20rem", height: "63px" }}
+              style={{ width: "200px", height: "63px" }}
               onClick={handleEnroll}
               disabled={enrolled}
             >
@@ -369,7 +372,7 @@ function CourseDetails() {
         <Button
           className="btn-lg"
           variant="primary"
-          style={{ width: "20rem", height: "63px" }}
+          style={{ width: "200px", height: "63px" }}
           onClick={handleEnroll}
           disabled={enrolled}
         >
