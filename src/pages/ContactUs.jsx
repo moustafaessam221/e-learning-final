@@ -22,6 +22,7 @@ const ContactUs = () => {
 
   return (
     <Container className="my-5">
+      <br />
       <h1 className="text-center mb-4">Contact Us</h1>
       <Row>
         <Col md={6}>

@@ -4,6 +4,7 @@ import { Container, Row, Col, Card } from 'react-bootstrap';
 const AboutUs = () => {
   return (
     <Container className="my-5">
+      <br />
       <h1 className="text-center mb-4">About Us</h1>
 
       <h2 className="mb-3">Who We Are?</h2>

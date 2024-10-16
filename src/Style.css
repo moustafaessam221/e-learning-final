@@ -34,11 +34,11 @@
 
 .pricing-icon-large {
   font-size: 3rem;
-  color: blue;
+  color: orange;
 }
 
 .plan-title {
-  color: orange;
+  color: #161616;
   font-weight: bold;
 }
 
@@ -53,11 +53,13 @@
 }
 
 .check-icon {
-  color: lightgreen;
+  color: rgb(34, 205, 34);
+  font-size: 24px;
   margin-right: 10px;
 }
 
 .times-icon {
+  font-size: 24px;
   color: red;
   margin-right: 10px;
 }
@@ -80,8 +82,9 @@
 } */
 
 .invest-icon {
-  font-size: 35px;
+  font-size: 4rem;
   margin-bottom: 10px;
+  color: #0b74fd;
 }
 /* 
 .invest-title {
@@ -169,3 +172,14 @@
    
   }
 } */
+
+.custom-pricing-card {
+  height: 510px;
+  button {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+
+  }
+}

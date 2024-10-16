@@ -12,6 +12,7 @@ import "../Style.css";
 import { UsersContext } from "../store/UsersContext";
 import { useNavigate } from "react-router-dom";
 import supabase from "../config/supabaseClient";
+import toast from "react-hot-toast";
 
 const PricingCard = () => {
   const { user } = useContext(UsersContext);
@@ -39,6 +40,7 @@ const PricingCard = () => {
   // subscription function
   const subscripeFunction = async (type) => {
     if (!user?.id) {
+      toast.error("Please login to subscribe");
       navigate("/login");
     } else {
       const { data, error } = await supabase
@@ -51,7 +53,7 @@ const PricingCard = () => {
       } else {
         console.log(data);
         setSubscription(type);
-        alert (type + "subscirption activaited")
+        toast.success("You are now a " + type + " subscriber");
       }
     }
   };
@@ -68,39 +70,39 @@ const PricingCard = () => {
         <Col lg={4} md={4} sm={10} className="mb-4">
           <Card className="h-100 mb-2">
             <Card.Body>
-              <div className="mb-4">
+              <div className="mb-4 custom-pricing-card">
                 <div className="pricing-icon mb-3">
                   <FontAwesomeIcon
                     icon={faDollarSign}
-                    className="pricing-icon-large"
+                    className="pricing-icon-large custom-pricing-dollar"
                   />
                 </div>
-                <h5 className="plan-title">Free Access</h5>
-                <p>Free</p>
-                <p>
-                  <h6>Description</h6> Explore our courses with a limited, free
-                  plan. Ideal for getting a feel for our content.
+                <h5 className="plan-title fs-4">Free Access</h5>
+                <p className="fs-1 fw-bold">Free</p>
+                <p className="fs-5 mb-3 mt-3">
+                  Explore our courses with a limited, free plan. Ideal for
+                  getting a feel for our content.
                 </p>
                 <ul className="list-unstyled feature-list">
-                  <li>
+                  <li className="mb-3">
                     <FontAwesomeIcon icon={faCheck} className="check-icon" />{" "}
                     Access to introductory lessons
                   </li>
-                  <li>
+                  <li className="mb-3">
                     <FontAwesomeIcon icon={faCheck} className="check-icon" />{" "}
                     Limited course topics
                   </li>
-                  <li>
+                  <li className="mb-3">
                     <FontAwesomeIcon icon={faCheck} className="check-icon" />{" "}
                     Community support
                   </li>
-                  <li>
+                  <li className="mb-3">
                     <FontAwesomeIcon icon={faTimes} className="times-icon" />{" "}
                     Certificate
                   </li>
                 </ul>
                 <Button
-                  className="mt-4"
+                  className="mt-4 px-5 py-2"
                   onClick={() => subscripeFunction("free")}
                   disabled={subscription === "free"}
                 >
@@ -116,40 +118,40 @@ const PricingCard = () => {
         <Col lg={4} md={4} sm={10} className="mb-4">
           <Card className="h-100 mb-2">
             <Card.Body>
-              <div className="mb-4">
+              <div className="mb-4 custom-pricing-card">
                 <div className="pricing-icon mb-3">
                   <FontAwesomeIcon
                     icon={faStar}
                     className="pricing-icon-large"
                   />
                 </div>
-                <h5 className="plan-title">Monthly Access</h5>
-                <p>$50/month</p>
-                <p>
-                  <h6>Description</h6> Enjoy full access to all of our courses
-                  on a flexible monthly basis.
+                <h5 className="plan-title fs-4">Monthly Access</h5>
+                <p className="fs-1 fw-bold">$50/month</p>
+                <p className="fs-5 mb-3 mt-3">
+                  Enjoy full access to all of our courses on a flexible monthly
+                  basis and get a certificate of completion.
                 </p>
                 <ul className="list-unstyled feature-list">
-                  <li>
+                  <li className="mb-3">
                     <FontAwesomeIcon icon={faCheck} className="check-icon" />{" "}
                     Access to all courses
                   </li>
-                  <li>
+                  <li className="mb-3">
                     <FontAwesomeIcon icon={faCheck} className="check-icon" />{" "}
                     Regularly updated content
                   </li>
-                  <li>
+                  <li className="mb-3">
                     <FontAwesomeIcon icon={faCheck} className="check-icon" />{" "}
                     Premium support
                   </li>
-                  <li>
+                  <li className="mb-3">
                     <FontAwesomeIcon icon={faCheck} className="check-icon" />{" "}
                     Certificate
                   </li>
                 </ul>
                 <Button
                   onClick={() => subscripeFunction("monthly")}
-                  className="mt-4"
+                  className="mt-4 px-5 py-2"
                   disabled={subscription === "monthly"}
                 >
                   {subscription === "monthly" ? "Activated" : "Enroll Monthly"}
@@ -163,39 +165,39 @@ const PricingCard = () => {
         <Col lg={4} md={4} sm={10} className="mb-4 subscription-card">
           <Card className="h-100 mb-2">
             <Card.Body>
-              <div className="mb-4">
+              <div className="mb-4 custom-pricing-card">
                 <div className="pricing-icon mb-3">
                   <FontAwesomeIcon
                     icon={faCrown}
                     className="pricing-icon-large"
                   />
                 </div>
-                <h5 className="plan-title">Yearly Access</h5>
-                <p>$100/year</p>
-                <p>
-                  <h6>Description</h6> Get the best value with yearly access to
-                  all courses. Recommended for committed learners.
+                <h5 className="plan-title fs-4">Yearly Access</h5>
+                <p className="fs-1 fw-bold">$250/year</p>
+                <p className="fs-5 mb-3 mt-3">
+                  Get the best value with yearly access to all courses.
+                  Recommended for committed learners.
                 </p>
                 <ul className="list-unstyled feature-list">
-                  <li>
+                  <li className="mb-3">
                     <FontAwesomeIcon icon={faCheck} className="check-icon" />{" "}
                     Access to all courses
                   </li>
-                  <li>
+                  <li className="mb-3">
                     <FontAwesomeIcon icon={faCheck} className="check-icon" />{" "}
                     Save more with yearly billing
                   </li>
-                  <li>
+                  <li className="mb-3">
                     <FontAwesomeIcon icon={faCheck} className="check-icon" />{" "}
                     Priority support and exclusive resources
                   </li>
-                  <li>
+                  <li className="mb-3">
                     <FontAwesomeIcon icon={faCheck} className="check-icon" />{" "}
                     Certificate
                   </li>
                 </ul>
                 <Button
-                  className="mt-4"
+                  className="mt-4 px-5 py-2"
                   disabled={subscription === "yearly"}
                   onClick={() => subscripeFunction("yearly")}
                 >

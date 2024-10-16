@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import EduSpaceLogo from "../images/EduSpaceLogo.png"; // استيراد الشعار
 import { UsersContext } from "../store/UsersContext";
 import Search from "./Search";
-import "./Navbar.css"
+import "./Navbar.css";
 
 const Navigationbar = () => {
   const { user, logout } = useContext(UsersContext);
@@ -22,12 +22,18 @@ const Navigationbar = () => {
             alt="EduSpace Logo"
             style={{ height: "40px", marginRight: "10px" }}
           />
-          <Navbar.Brand className="custom-navlogo" style={{ fontSize: "1.5rem", fontWeight: "bold" }}>
+          <Navbar.Brand
+            className="custom-navlogo"
+            style={{ fontSize: "1.5rem", fontWeight: "bold" }}
+          >
             EduSpace
           </Navbar.Brand>
         </Link>
 
-        <Navbar.Toggle aria-controls="navbarScroll" />
+        <Navbar.Toggle
+          aria-controls="navbarScroll"
+          className="custom-navbar-toggler"
+        />
         <Navbar.Collapse id="navbarScroll">
           <Nav className="me-auto">
             <Nav.Link className="custom-navText" as={Link} to="/">
@@ -44,7 +50,7 @@ const Navigationbar = () => {
             </Nav.Link>
 
             {user?.role === "admin" && (
-              <Nav.Link className="text-white" as={Link} to="/Dashboard">
+              <Nav.Link className="custom-navText" as={Link} to="/Dashboard">
                 Admin Dashboard
               </Nav.Link>
             )}
@@ -55,7 +61,11 @@ const Navigationbar = () => {
           <Nav>
             {user ? (
               <>
-                <Nav.Link as={Link} to="/profile" className="custom-navProfile mx-2">
+                <Nav.Link
+                  as={Link}
+                  to="/profile"
+                  className="custom-navProfile mx-2"
+                >
                   <FaUser />
                 </Nav.Link>
                 <Nav.Link

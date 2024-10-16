@@ -15,6 +15,8 @@ import { Button, Card, Col, Container, Image, Row } from "react-bootstrap";
 import { useParams, useNavigate } from "react-router-dom";
 import supabase from "../config/supabaseClient";
 import { UsersContext } from "../store/UsersContext";
+import toast from "react-hot-toast";
+import "./CourseDetails.css";
 
 function CourseDetails() {
   const { id } = useParams();
@@ -24,6 +26,7 @@ function CourseDetails() {
 
   const [fetchError, setFetchError] = useState(null);
   const [title, setTitle] = useState("");
+  const [shortDescription, setShortDescription] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [rating, setRating] = useState("");
@@ -59,6 +62,7 @@ function CourseDetails() {
       if (data) {
         setTitle(data.title);
         setDescription(data.description);
+        setShortDescription(data.short_description);
         setRating(data.rating);
         setPrice(data.price);
         setViews(data.views);
@@ -86,7 +90,7 @@ function CourseDetails() {
 
       if (error) {
         console.log(error);
-      } else if (data && data.courses) {
+      } else if (data?.courses) {
         if (data.courses.includes(id)) {
           setEnrolled(true);
         }
@@ -103,8 +107,8 @@ function CourseDetails() {
     let final_quiz;
 
     if (!user) {
-      // will alerts be replaced with toasts?
-      alert("Please login first");
+      toast.error("Please login to enroll");
+      navigate("/login");
       return;
     }
 
@@ -120,7 +124,8 @@ function CourseDetails() {
     if (data) {
       const currentCourses = data.courses || [];
       if (currentCourses.includes(id)) {
-        alert("Course already enrolled");
+        toast.error("You are already enrolled in this course");
+        navigate(`/${userIdShortened}/${id}`);
         return;
       }
 
@@ -146,7 +151,7 @@ function CourseDetails() {
       if (error) {
         console.log(error);
       } else {
-        alert("Course enrolled successfully");
+        toast.success("Course enrolled successfully");
         setEnrolled(true);
         const { data, error } = await supabase
           .from("enrolled_courses")
@@ -187,7 +192,7 @@ function CourseDetails() {
         <Row className="g-4">
           <Col lg={7}>
             <h1 className="">{title}</h1>
-            <p className="mt-4 fs-5 w-75">{description}</p>
+            <p className="mt-4 fs-5 w-75">{shortDescription || description}</p>
             <div
               style={{ width: "200px" }}
               className="d-flex flex-wrap align-items-center justify-content-between gap-3"
@@ -219,29 +224,41 @@ function CourseDetails() {
                   style={{ fontSize: "1.5rem" }}
                   className="border-bottom border-dark pb-2 d-flex align-items-center  px-3"
                 >
-                  <FontAwesomeIcon icon={faDiamond} className="m-3" />
+                  <FontAwesomeIcon
+                    icon={faDiamond}
+                    className="m-3 custom-inc"
+                  />
                   AI assistance for guided help
                 </p>
                 <p
                   style={{ fontSize: "1.5rem" }}
                   className="border-bottom border-dark pb-2 d-flex align-items-center px-3"
                 >
-                  <FontAwesomeIcon icon={faBagShopping} className="m-3" />
+                  <FontAwesomeIcon
+                    icon={faBagShopping}
+                    className="m-3 custom-inc"
+                  />
                   Projects to apply new skills
                 </p>
                 <p
                   style={{ fontSize: "1.5rem" }}
                   className="border-bottom border-dark pb-2 d-flex align-items-center  px-3"
                 >
-                  <FontAwesomeIcon icon={faBarsProgress} className="m-3" />
+                  <FontAwesomeIcon
+                    icon={faBarsProgress}
+                    className="m-3 custom-inc"
+                  />
                   Quizzes to test your knowledge
                 </p>
                 <p
                   style={{ fontSize: "1.5rem" }}
                   className="d-flex align-items-center  px-3"
                 >
-                  <FontAwesomeIcon icon={faCertificate} className="m-3" />a
-                  certificate of completion
+                  <FontAwesomeIcon
+                    icon={faCertificate}
+                    className="m-3 custom-inc"
+                  />
+                  a certificate of completion
                 </p>
               </div>
             </Container>
@@ -253,28 +270,28 @@ function CourseDetails() {
       <Container className="my-5 border border-dark p-5 ">
         <Row className="text-start px-3 g-4">
           <Col lg={3} className="d-flex align-items-center">
-            <FontAwesomeIcon icon={faNetworkWired} className="me-3" size="3x" />
+            <FontAwesomeIcon icon={faNetworkWired} className="me-3 custom-inc" size="3x" />
             <div>
               <h6>Skill Level</h6>
               <h3>Beginner</h3>
             </div>
           </Col>
           <Col lg={3} className="d-flex align-items-center">
-            <FontAwesomeIcon icon={faClock} className="me-3" size="3x" />
+            <FontAwesomeIcon icon={faClock} className="me-3 custom-inc" size="3x" />
             <div>
               <h6>Time to complete</h6>
               <h3>{courseHours} hours</h3>
             </div>
           </Col>
           <Col lg={3} className="d-flex align-items-center">
-            <FontAwesomeIcon icon={faStar} className="me-3" size="3x" />
+            <FontAwesomeIcon icon={faStar} className="me-3 custom-inc" size="3x" />
             <div>
               <h6>Projects</h6>
               <h3>2</h3>
             </div>
           </Col>
           <Col lg={3} className="d-flex align-items-center">
-            <FontAwesomeIcon icon={faBarsProgress} className="me-3" size="3x" />
+            <FontAwesomeIcon icon={faBarsProgress} className="me-3 custom-inc" size="3x" />
             <div>
               <h6>Perequisites</h6>
               <h3>None</h3>
@@ -293,13 +310,13 @@ function CourseDetails() {
           <Col lg={4}>
             <h2>Skills you'll gain</h2>
             <p className="fs-5 mt-3 mx-2">
-              <FontAwesomeIcon icon={faCheck} /> Lorem, ipsum dolor.
+              <FontAwesomeIcon icon={faCheck} className="custom-check" /> Lorem, ipsum dolor.
             </p>
             <p className="fs-5 mx-2">
-              <FontAwesomeIcon icon={faCheck} /> Lorem, ipsum dolor.
+              <FontAwesomeIcon icon={faCheck} className="custom-check"/> Lorem, ipsum dolor.
             </p>
             <p className="fs-5 mx-2">
-              <FontAwesomeIcon icon={faCheck} /> Lorem, ipsum dolor.
+              <FontAwesomeIcon icon={faCheck} className="custom-check"/> Lorem, ipsum dolor.
             </p>
           </Col>
         </Row>
@@ -312,9 +329,8 @@ function CourseDetails() {
         <div className="d-flex align-items-center px-5  my-3">
           <FontAwesomeIcon
             icon={faCircleCheck}
-            className="me-3"
+            className="me-3 custom-check"
             size="2x"
-            color="green"
           />
           <div>
             <h4>Lorem ipsum dolor sit amet consectetur.</h4>
@@ -328,9 +344,8 @@ function CourseDetails() {
         <div className="d-flex align-items-center px-5  my-3">
           <FontAwesomeIcon
             icon={faCircleCheck}
-            className="me-3"
+            className="me-3 custom-check"
             size="2x"
-            color="green"
           />
           <div>
             <h4>Lorem ipsum dolor sit amet consectetur.</h4>
@@ -344,9 +359,8 @@ function CourseDetails() {
         <div className="d-flex align-items-center px-5 my-3">
           <FontAwesomeIcon
             icon={faCircleCheck}
-            className="me-3"
+            className="me-3 custom-check"
             size="2x"
-            color="green"
           />
           <div>
             <h4>Lorem ipsum dolor sit amet consectetur.</h4>
@@ -359,7 +373,11 @@ function CourseDetails() {
         <hr />
         {/* ceritiface part */}
         <div className="d-flex align-items-center px-5 mt-2">
-          <FontAwesomeIcon icon={faCertificate} className="me-3" size="2x" />
+          <FontAwesomeIcon
+            icon={faCertificate}
+            className="me-3 custom-cert"
+            size="2x"
+          />
           <div>
             <h4>Certificate of Completion available with Plus or Pro</h4>
             <h6>

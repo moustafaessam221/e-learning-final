@@ -19,6 +19,7 @@ import { UsersContext } from "./store/UsersContext";
 import SearchResults from "./pages/SearchResults";
 import EnrolledCourse from "./pages/EnrolledCourse";
 import Dashboard from "./pages/Dashboard";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const [courses, setCourses] = useState([]);
@@ -53,10 +54,10 @@ function App() {
   }, []);
 
   return (
-    <>
       <CoursesContext.Provider value={{ courses, fetchError }}>
         <UsersContext.Provider value={{ user, setUser, role, setRole, logout }}>
           <BrowserRouter>
+            <Toaster />
             <Navigationbar />
             <main>
             <Routes>
@@ -80,7 +81,6 @@ function App() {
           </BrowserRouter>
         </UsersContext.Provider>
       </CoursesContext.Provider>
-    </>
   );
 }
 
