@@ -46,8 +46,8 @@ body {
 main {
   margin-top: 80px;
   flex: 1;
-  padding: 20px;
 }
+
 body,
 html {
   height: 100%;
