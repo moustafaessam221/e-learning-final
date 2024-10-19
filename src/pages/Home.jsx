@@ -5,6 +5,7 @@ import HeroSection from '../FixedComponent/HeroSection'
 import Slider from '../FixedComponent/Slider'
 import NewestCourses from '../components/NewestCourses'
 import Testimonials from '../FixedComponent/Testimonials'
+import BannerImage from '../components/InstructorBanner'
 
 function Home() {
   return (
@@ -15,6 +16,7 @@ function Home() {
    <InvestComponent />
     <NewestCourses />
     <Testimonials />
+    <BannerImage />
     </>
   )
 }

@@ -4,6 +4,7 @@ import ButtonGroup from "react-bootstrap/ButtonGroup";
 import { CoursesContext } from "../store/CourseContext";
 import CoursesCard from "../components/CoursesCard";
 import CoursesList from "../components/CoursesList";
+import BannerImage from "../components/InstructorBanner";
 
 function Courses() {
 
@@ -11,8 +12,10 @@ function Courses() {
 
   return (
     <>
+
       {/* Filters */}
       <CoursesList courses={courses} />
+      <BannerImage />
     </>
   );
 }
