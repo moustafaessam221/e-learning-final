@@ -1,0 +1,31 @@
+.custom-card {
+  position: relative;
+  max-width: 20rem !important;
+  min-width: 300px !important;
+  height: 31rem !important;
+  margin: 10px auto;
+  transition: all 0.2s ease-in-out;
+}
+.custom-card:hover {
+  background-color: #f6f6f6;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+  transform: scale(1.01);
+}
+
+.custom-card-title {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.course-author {
+  font-style: italic;
+}
+.custom-card-btn {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70%;
+}

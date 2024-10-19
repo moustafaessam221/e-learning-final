@@ -1,10 +1,10 @@
-// this is used to render the top 4 courses
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
 import React, { useContext, useEffect, useState } from "react";
-import CoursesCard from "./CoursesCard";
-import { CoursesContext } from "../store/CourseContext";
 import { Button, Container } from "react-bootstrap";
+import Row from "react-bootstrap/Row";
+import { Link } from "react-router-dom";
+import { CoursesContext } from "../store/CourseContext";
+import CoursesCard from "./CoursesCard";
+
 
 function TopCourses() {
   const { courses } = useContext(CoursesContext);
@@ -30,7 +30,7 @@ function TopCourses() {
     <Container fluid className="my-5 p-0 ">
       <div className="px-5 d-flex justify-content-between w-100">
       <h2>Top-Picked Courses</h2>
-      <Button variant="link">See more</Button>
+      <Button variant="link" as={Link} to="/courses" >See more</Button>
       </div>
       <Row
         xs={2}

@@ -61,20 +61,20 @@ const PricingCard = () => {
   return (
     <Container className="mt-5 pricing-container">
       <Row className="text-center mb-5 d-flex flex-row justify-content-center">
-        <Card.Title as="h3" className="pricing-title p-5">
+        <Card.Title as="h3" className="pricing-title p-5 fw-bold">
           Choose Your Plan
         </Card.Title>
 
         {/* Free Access */}
 
         <Col lg={4} md={4} sm={10} className="mb-4">
-          <Card className="h-100 mb-2">
+          <Card className="h-100 mb-2 px-3">
             <Card.Body>
               <div className="mb-4 custom-pricing-card">
                 <div className="pricing-icon mb-3">
                   <FontAwesomeIcon
                     icon={faDollarSign}
-                    className="pricing-icon-large custom-pricing-dollar"
+                    className="pricing-icon-large custom-pricing-dollar mt-3"
                   />
                 </div>
                 <h5 className="plan-title fs-4">Free Access</h5>
@@ -116,10 +116,10 @@ const PricingCard = () => {
         {/* Monthly Access */}
 
         <Col lg={4} md={4} sm={10} className="mb-4">
-          <Card className="h-100 mb-2">
+          <Card className="h-100 mb-2  px-3">
             <Card.Body>
               <div className="mb-4 custom-pricing-card">
-                <div className="pricing-icon mb-3">
+                <div className="pricing-icon mb-3 mt-3">
                   <FontAwesomeIcon
                     icon={faStar}
                     className="pricing-icon-large"
@@ -163,13 +163,13 @@ const PricingCard = () => {
 
         {/* Yearly Access */}
         <Col lg={4} md={4} sm={10} className="mb-4 subscription-card">
-          <Card className="h-100 mb-2">
+          <Card className="h-100 mb-2 px-3">
             <Card.Body>
               <div className="mb-4 custom-pricing-card">
                 <div className="pricing-icon mb-3">
                   <FontAwesomeIcon
                     icon={faCrown}
-                    className="pricing-icon-large"
+                    className="pricing-icon-large mt-3"
                   />
                 </div>
                 <h5 className="plan-title fs-4">Yearly Access</h5>

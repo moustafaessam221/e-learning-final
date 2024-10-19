@@ -93,7 +93,7 @@ function CoursesList() {
           sortCriteria={sortCriteria}
         />
       </Container>
-      <Container className="d-flex flex-wrap">
+      <Container className="d-flex flex-wrap gap-4">
         {filterCourses.map((course) => (
           <CoursesCard
             key={course.id}
@@ -103,6 +103,9 @@ function CoursesList() {
             rating={course.rating}
             price={course.price}
             views={course.views}
+            author={course.author}
+            category={course.category}
+            createdAt={course.created_at}
           />
         ))}
       </Container>

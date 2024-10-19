@@ -4,10 +4,11 @@ import { Container, Row, Col, Card } from "react-bootstrap";
 const Testimonials = () => {
   return (
     <Container className="mt-5">
-
       <Row className="d-flex justify-content-center">
-      <h2 className="text-center mb-4 invest-heading">Why Students Love EduSpace</h2>
-        <Col md={5} className="mb-3">
+        <h2 className="text-center mb-4 invest-heading mt-5">
+          Why Students Love EduSpace
+        </h2>
+        <Col md={5} className="mb-5 mt-3">
           <Card className="text-center p-3 shadow">
             <Card.Body>
               <Card.Text>
@@ -17,7 +18,7 @@ const Testimonials = () => {
             </Card.Body>
           </Card>
         </Col>
-        <Col md={5} className="mb-3">
+        <Col md={5} className="mb-5 mt-3">
           <Card className="text-center p-3 shadow">
             <Card.Body>
               <Card.Text>

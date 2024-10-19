@@ -3,6 +3,7 @@ import { CoursesContext } from "../store/CourseContext";
 import Row from "react-bootstrap/Row";
 import CoursesCard from "./CoursesCard";
 import { Button, Container } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 
 function NewestCourses() {
@@ -32,8 +33,8 @@ function NewestCourses() {
     <Container fluid className="mt-5 p-0">
       <div className="px-5 d-flex justify-content-between w-100">
         <h2>Newest Courses</h2>
-        <Button variant="link">See more</Button>
-      </div>
+        <Button variant="link" as={Link} to="/courses" >See more</Button>
+        </div>
       <Row
         xs={2}
         sm={3}

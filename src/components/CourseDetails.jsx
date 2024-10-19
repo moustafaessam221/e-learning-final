@@ -270,28 +270,44 @@ function CourseDetails() {
       <Container className="my-5 border border-dark p-5 ">
         <Row className="text-start px-3 g-4">
           <Col lg={3} className="d-flex align-items-center">
-            <FontAwesomeIcon icon={faNetworkWired} className="me-3 custom-inc" size="3x" />
+            <FontAwesomeIcon
+              icon={faNetworkWired}
+              className="me-3 custom-inc"
+              size="3x"
+            />
             <div>
               <h6>Skill Level</h6>
               <h3>Beginner</h3>
             </div>
           </Col>
           <Col lg={3} className="d-flex align-items-center">
-            <FontAwesomeIcon icon={faClock} className="me-3 custom-inc" size="3x" />
+            <FontAwesomeIcon
+              icon={faClock}
+              className="me-3 custom-inc"
+              size="3x"
+            />
             <div>
               <h6>Time to complete</h6>
               <h3>{courseHours} hours</h3>
             </div>
           </Col>
           <Col lg={3} className="d-flex align-items-center">
-            <FontAwesomeIcon icon={faStar} className="me-3 custom-inc" size="3x" />
+            <FontAwesomeIcon
+              icon={faStar}
+              className="me-3 custom-inc"
+              size="3x"
+            />
             <div>
               <h6>Projects</h6>
               <h3>2</h3>
             </div>
           </Col>
           <Col lg={3} className="d-flex align-items-center">
-            <FontAwesomeIcon icon={faBarsProgress} className="me-3 custom-inc" size="3x" />
+            <FontAwesomeIcon
+              icon={faBarsProgress}
+              className="me-3 custom-inc"
+              size="3x"
+            />
             <div>
               <h6>Perequisites</h6>
               <h3>None</h3>
@@ -310,13 +326,16 @@ function CourseDetails() {
           <Col lg={4}>
             <h2>Skills you'll gain</h2>
             <p className="fs-5 mt-3 mx-2">
-              <FontAwesomeIcon icon={faCheck} className="custom-check" /> Lorem, ipsum dolor.
+              <FontAwesomeIcon icon={faCheck} className="custom-check" /> Lorem,
+              ipsum dolor.
             </p>
             <p className="fs-5 mx-2">
-              <FontAwesomeIcon icon={faCheck} className="custom-check"/> Lorem, ipsum dolor.
+              <FontAwesomeIcon icon={faCheck} className="custom-check" /> Lorem,
+              ipsum dolor.
             </p>
             <p className="fs-5 mx-2">
-              <FontAwesomeIcon icon={faCheck} className="custom-check"/> Lorem, ipsum dolor.
+              <FontAwesomeIcon icon={faCheck} className="custom-check" /> Lorem,
+              ipsum dolor.
             </p>
           </Col>
         </Row>
