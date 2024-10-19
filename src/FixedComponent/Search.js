@@ -15,9 +15,9 @@ const Search = () => {
       try {
         const { data, error } = await supabase
           .from('courses')
-          .select('title')
+          .select('id, title')
           .ilike('title', `%${searchTerm}%`)
-          .limit(5);  
+          .limit(5);
 
         if (error) throw error;
         setSuggestions(data);
@@ -36,18 +36,18 @@ const Search = () => {
     fetchSuggestions(value);
   };
 
-  const handleSuggestionClick = (suggestion) => {
-    navigate(`/search?q=${encodeURIComponent(suggestion.title)}`);
-    setQuery(''); 
-    setSuggestions([]); 
+  const handleSuggestionClick = (course) => {
+    navigate(`/course/${course.id}`);
+    setQuery('');
+    setSuggestions([]);
   };
 
   const handleSearch = (e) => {
     e.preventDefault();
     if (query.trim()) {
       navigate(`/search?q=${encodeURIComponent(query)}`);
-      setQuery(''); 
-      setSuggestions([]);    
+      setQuery('');
+      setSuggestions([]);
     }
   };
 
@@ -83,13 +83,13 @@ const Search = () => {
 
       {suggestions.length > 0 && (
         <ListGroup className="position-absolute w-100 mt-1" style={{ zIndex: 1000 }}>
-          {suggestions.map((suggestion, index) => (
+          {suggestions.map((course, index) => (
             <ListGroup.Item
               key={index}
               action
-              onClick={() => handleSuggestionClick(suggestion)}
+              onClick={() => handleSuggestionClick(course)}
             >
-              {suggestion.title}
+              {course.title}
             </ListGroup.Item>
           ))}
         </ListGroup>
