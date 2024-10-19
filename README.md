@@ -60,7 +60,7 @@ It was developed as the final task for the **DEPI** program. The platform allows
    - Displays all available courses. Users can search and apply filters to narrow down course options.
 
 3. **Course Details**:
-  - Each Course has a detailed page which shows multiple information like course length, price and reviews.
+   - Each Course has a detailed page which shows multiple information like course length, price and reviews.
   
 4. **Profile Page**:
    - Each user has a personalized profile page where they can manage their profile picture, view their skills, experience, and current courses in progress.
