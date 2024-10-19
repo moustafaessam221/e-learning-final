@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { UsersContext } from "../store/UsersContext";
 import supabase from "../config/supabaseClient";
 import { useParams, useNavigate } from "react-router-dom";
-import { Container, Row, Col, ListGroup, Button } from "react-bootstrap";
+import { Container, Row, Col, ListGroup, Button, ProgressBar } from "react-bootstrap";
 import Comments from "../components/Comments";
 import AddComments from "../components/AddComments";
 
@@ -16,6 +16,7 @@ function EnrolledCourse() {
   const [courseName, setCourseName] = useState("");
   const [completedItems, setCompletedItems] = useState([]);
   const [courseComments, setCourseComments] = useState([]);
+  const [progress, setProgress] = useState(0); // For the progress bar
 
   useEffect(() => {
     if (!user?.id) {
@@ -35,9 +36,11 @@ function EnrolledCourse() {
       } else {
         setCourseContent(data[0].course_content || []);
         setQuizLink(data[0].final_quiz);
-        if (completedItems.length === 0) {
-          setCompletedItems(Array(data[0].course_content.length).fill(false));
-        }
+
+        const completedContent = data[0].completed_content || [];
+        setCompletedItems(completedContent);
+
+        setProgress((completedContent.length / data[0].course_content.length) * 100);
       }
     };
 
@@ -57,19 +60,43 @@ function EnrolledCourse() {
 
     fetchCourse();
     fetchSpecificCourse();
-  }, [user, courseId, navigate, completedItems, courseComments]);
+  }, [user, courseId, navigate]);
 
-  const handleCheckboxChange = (index) => {
+  const handleCheckboxChange = async (index) => {
     const newCompletedItems = [...completedItems];
-    newCompletedItems[index] = !newCompletedItems[index];
+
+    if (newCompletedItems.includes(index)) {
+      newCompletedItems.splice(newCompletedItems.indexOf(index), 1);
+    } else {
+      newCompletedItems.push(index);
+    }
+
     setCompletedItems(newCompletedItems);
+
+    // Update the database
+    const { data, error } = await supabase
+      .from("enrolled_courses")
+      .update({ completed_content: newCompletedItems })
+      .eq("user_id", user.id)
+      .eq("course_id", courseId);
+
+    if (error) {
+      console.log("Error updating completed content", error);
+    }
+
+    // Calculate and set progress
+    setProgress((newCompletedItems.length / courseContent.length) * 100);
   };
 
-  const allCompleted = completedItems.every((item) => item);
+  const allCompleted = completedItems.length === courseContent.length;
 
   return (
     <Container className="my-5">
       <h1>{courseName}</h1>
+
+      {/* Progress Bar */}
+      <ProgressBar now={progress} label={`${Math.round(progress)}%`} className="my-4" />
+
       <Row>
         <Col md={8} xs={12}>
           {courseContent.map((module, index) => (
@@ -88,11 +115,11 @@ function EnrolledCourse() {
                   <input
                     className="form-check-input me-3"
                     type="checkbox"
-                    checked={completedItems[index]}
+                    checked={completedItems.includes(index)} // Check if the item is completed
                     onChange={() => handleCheckboxChange(index)}
                   />
                   {module.title}
-                  {completedItems[index] && (
+                  {completedItems.includes(index) && (
                     <span className="text-success float-end">Completed</span>
                   )}
                 </ListGroup.Item>
@@ -101,13 +128,12 @@ function EnrolledCourse() {
               <h5 className="text-muted">No modules yet</h5>
             )}
           </ListGroup>
+
           {allCompleted && (
             <Button
               variant="primary"
               className="mt-3"
-              href={
-                quizLink.startsWith("http") ? quizLink : `https://${quizLink}`
-              }
+              href={quizLink.startsWith("http") ? quizLink : `https://${quizLink}`}
               target="_blank"
             >
               Go to Quiz
@@ -116,7 +142,7 @@ function EnrolledCourse() {
         </Col>
       </Row>
 
-      {/* Comments  */}
+      {/* Comments Section */}
       <AddComments />
       <Comments courseComments={courseComments} />
     </Container>
