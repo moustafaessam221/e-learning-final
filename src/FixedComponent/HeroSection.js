@@ -3,15 +3,11 @@ import { Container, Row, Col, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useNavigate } from "react-router-dom";
 function HeroSection() {
+  const navigate = useNavigate();
 
-  
- 
-    const navigate = useNavigate(); 
-  
-    const handleButtonClick = () => {
-      navigate('/price'); 
-    };
-
+  const handleButtonClick = () => {
+    navigate("/price");
+  };
 
   return (
     <Container className="home-banner mt-5">
@@ -22,7 +18,11 @@ function HeroSection() {
             Choose from over 3000+ world class courses with job-ready certified
             programs in your subscription.
           </p>
-          <Button onClick={handleButtonClick} className="btn-lg mt-3" variant="primary">
+          <Button
+            onClick={handleButtonClick}
+            className="btn-lg mt-3"
+            variant="primary"
+          >
             + Subscribe Now
           </Button>
         </Col>

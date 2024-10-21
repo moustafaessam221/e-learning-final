@@ -8,11 +8,10 @@ function CoursesList() {
   const { courses } = useContext(CoursesContext);
   const [selectCategory, setSelectCategory] = useState("ALL");
   const [coursesPrice, setCoursesPrice] = useState("All");
-  const [filterCourses, setFilterCourses] = useState([]);
-  const [sortCriteria, setSortCriteria] = useState("Sorted by"); 
+  const [sortCriteria, setSortCriteria] = useState("Sorted by");
   const [selectedRating, setSelectedRating] = useState(0);
   const [displayedStars, setDisplayedStars] = useState("");
-
+  const [filterCourses, setFilterCourses] = useState([]);
 
   const handleSelect = (category) => {
     setSelectCategory(category);
@@ -29,22 +28,22 @@ function CoursesList() {
   const handleRating = (rating) => {
     setSelectedRating(Number(rating));
   };
-  
 
   useEffect(() => {
-    let filteredCourses = [...courses]; 
+    let filteredCourses = [...courses];
 
     // Filter by category
     if (selectCategory !== "ALL") {
       filteredCourses = filteredCourses.filter(
-        (course) =>
-          course.category && course.category.includes(selectCategory)
+        (course) => course.category && course.category.includes(selectCategory)
       );
     }
 
     // Filter by price
     if (coursesPrice === "Free") {
-      filteredCourses = filteredCourses.filter((course) => course.price === null);
+      filteredCourses = filteredCourses.filter(
+        (course) => course.price === null
+      );
     } else if (coursesPrice === "Paid") {
       filteredCourses = filteredCourses.filter((course) => course.price > 0);
     }
@@ -52,29 +51,29 @@ function CoursesList() {
     // Filter by rating
     if (selectedRating > 0) {
       filteredCourses = filteredCourses.filter(
-        (course) => course.rating >= selectedRating);
-        setDisplayedStars(("★".repeat(selectedRating) + " & up")); 
+        (course) => course.rating >= selectedRating
+      );
+      setDisplayedStars("★".repeat(selectedRating) + " & up");
       if (selectedRating === 5) {
         setDisplayedStars("★★★★★");
       }
-    }    
+    }
 
-  
-
-    // Sorting filter    
+    // Sorting filter
     if (sortCriteria === "Title") {
       filteredCourses.sort((a, b) => a.title.localeCompare(b.title));
     } else if (sortCriteria === "Price") {
-      filteredCourses.sort((a, b) => (a.price || 0) - (b.price || 0)); 
+      filteredCourses.sort((a, b) => (a.price || 0) - (b.price || 0));
     } else if (sortCriteria === "Rating") {
-      filteredCourses.sort((a, b) => b.rating - a.rating); 
+      filteredCourses.sort((a, b) => b.rating - a.rating);
     } else if (sortCriteria === "Newest") {
       filteredCourses.sort(
-        (a, b) => new Date(b.created_at) - new Date(a.created_at))
+        (a, b) => new Date(b.created_at) - new Date(a.created_at)
+      );
     } else if (sortCriteria === "Top") {
-      filteredCourses.sort((a, b) => b.views - a.views)
+      filteredCourses.sort((a, b) => b.views - a.views);
     }
-    
+
     setFilterCourses(filteredCourses);
   }, [selectCategory, courses, coursesPrice, sortCriteria, selectedRating]);
 

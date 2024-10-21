@@ -15,18 +15,23 @@ function Footer() {
   const isMobile = useMediaQuery("(max-width: 768px)");
 
   return (
-    <footer className="custom-footer pt-5 pb-3 mt-5">
+    <footer className="custom-footer pt-5 pb-3">
       <Container>
         <Row className=" flex-wrap">
-          <Col className={isMobile ? "p-20 mx-4 mb-3 text-center" : "p-20 mx-4 mb-3"} style={{ minWidth: "200px" }}>
-           <div>
-           <img
-           className='footer-logo mx-3'
-            src={EduSpaceLogo}
-            alt="EduSpace Logo"
-          />
-           </div>
-            <div className='mt-4'>
+          <Col
+            className={
+              isMobile ? "p-20 mx-4 mb-3 text-center" : "p-20 mx-4 mb-3"
+            }
+            style={{ minWidth: "200px" }}
+          >
+            <div>
+              <img
+                className="footer-logo mx-3"
+                src={EduSpaceLogo}
+                alt="EduSpace Logo"
+              />
+            </div>
+            <div className="mt-4">
               <a href="#" className="me-3">
                 <FontAwesomeIcon icon={faXTwitter} size="2x" />
               </a>
@@ -40,8 +45,7 @@ function Footer() {
           </Col>
           {isMobile ? null : (
             <>
-             
-              <Col  md={2}>
+              <Col md={2}>
                 <h5>EduSpace</h5>
                 <Nav.Link as={Link} to="/about">
                   About
@@ -53,15 +57,14 @@ function Footer() {
                   Home
                 </Nav.Link>
                 <Nav.Link as={Link} to="/">
-                Get the app
+                  Get the app
                 </Nav.Link>
                 <Nav.Link as={Link} to="/">
-                Business
+                  Business
                 </Nav.Link>
               </Col>
 
-           
-              <Col  md={2}>
+              <Col md={2}>
                 <h5>Company</h5>
                 <Nav.Link as={Link} to="/career">
                   Careers
@@ -77,8 +80,7 @@ function Footer() {
                 </Nav.Link>
               </Col>
 
-            
-              <Col  md={2}>
+              <Col md={2}>
                 <h5>Licenes</h5>
                 <Nav.Link as={Link} to="/">
                   Terms
@@ -93,7 +95,7 @@ function Footer() {
                   Sitemap
                 </Nav.Link>
                 <Nav.Link as={Link} to="/">
-                Accessibility statement
+                  Accessibility statement
                 </Nav.Link>
               </Col>
             </>
@@ -121,9 +123,7 @@ function Footer() {
           </Col> */}
         </Row>
       </Container>
-      <div className="text-center mt-4">
-        Copyright © 2024 EduSpace.
-      </div>
+      <div className="text-center mt-4">Copyright © 2024 EduSpace.</div>
     </footer>
   );
 }

@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import AuthCardButton from "../FixedComponent/AuthCardButton";
 import { faFacebookF, faGoogle } from "@fortawesome/free-brands-svg-icons";
 import supabase from "../config/supabaseClient";
+import toast from "react-hot-toast";
 
 export default function Signup() {
   const [email, setEmail] = useState("");
@@ -56,7 +57,8 @@ export default function Signup() {
           },
         ]);
 
-        setMsg("Signup successful!. Please check your email for verification.");
+        setMsg("Signup successful!");
+        toast.success("Please login!");
         setLoading(false);
         setEmail("");
         setName("");
@@ -70,7 +72,6 @@ export default function Signup() {
   };
 
   return (
-    <>
       <Row className="flex justify-content-center  my-5">
         <Col className="align-items-center" lg={4}>
           <Card>
@@ -167,6 +168,5 @@ export default function Signup() {
           </div>
         </Col>
       </Row>
-    </>
   );
 }

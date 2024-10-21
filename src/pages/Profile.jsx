@@ -20,7 +20,7 @@ import "../Style.css";
 const ProfilePage = () => {
   const { user } = useContext(UsersContext);
   const imgInputRef = useRef(null);
-  const userIdShortened = user.id.slice(0, 5);
+  const userIdShortened = user?.id ? user.id.slice(0, 5) : "";
 
   const [userData, setUserData] = useState(null);
   const [email, setEmail] = useState("");

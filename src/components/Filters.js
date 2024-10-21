@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Dropdown } from "react-bootstrap";
-import { useContext } from "react";
-import { Container } from "bootstrap";
 import { CoursesContext } from "../store/CourseContext";
 import "../Style.css";
 
@@ -41,11 +39,6 @@ function Filters({
         <Dropdown.Toggle
           id="dropdown-basic"
           className="custom-dropdown-width mb-1"
-          style={{
-            backgroundColor: "white",
-            color: "black",
-            border: "1px solid rgb(108, 106, 106)",
-          }}
         >
           {selectCategory === "ALL" ? "Category" : selectCategory}
         </Dropdown.Toggle>
@@ -65,11 +58,6 @@ function Filters({
         <Dropdown.Toggle
           id="dropdown-basic"
           className="custom-dropdown-width mb-1"
-          style={{
-            backgroundColor: "white",
-            color: "black",
-            border: "1px solid rgb(108, 106, 106)",
-          }}
         >
           {coursesPrice === "All" ? "Price" : coursesPrice}
         </Dropdown.Toggle>
@@ -86,11 +74,6 @@ function Filters({
         <Dropdown.Toggle
           id="dropdown-basic"
           className="custom-dropdown-width mb-1"
-          style={{
-            backgroundColor: "white",
-            color: "black",
-            border: "1px solid rgb(108, 106, 106)",
-          }}
         >
           {selectedRating === 0 ? "Rating" : stars}
         </Dropdown.Toggle>
@@ -110,11 +93,6 @@ function Filters({
         <Dropdown.Toggle
           id="dropdown-basic"
           className="custom-dropdown-width mb-1"
-          style={{
-            backgroundColor: "white",
-            color: "black",
-            border: "1px solid rgb(108, 106, 106)",
-          }}
         >
           {sortCriteria}
         </Dropdown.Toggle>

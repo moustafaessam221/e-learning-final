@@ -16,12 +16,16 @@ import toast from "react-hot-toast";
 
 const PricingCard = () => {
   const { user } = useContext(UsersContext);
-  console.log(user);
   const navigate = useNavigate();
   const [subscription, setSubscription] = useState("free");
 
   // fetch user subscription
   useEffect(() => {
+    if (!user?.id) {
+      setSubscription("free");
+      return;
+    }
+
     const fetchSubscription = async () => {
       const { data, error } = await supabase
         .from("profile")
@@ -35,7 +39,7 @@ const PricingCard = () => {
       }
     };
     fetchSubscription();
-  }, [user.id, subscription]);
+  }, [user, subscription]);
 
   // subscription function
   const subscripeFunction = async (type) => {
@@ -43,7 +47,7 @@ const PricingCard = () => {
       toast.error("Please login to subscribe");
       navigate("/login");
     } else {
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from("profile")
         .update({ subscription: type })
         .eq("id", user.id);
@@ -51,7 +55,6 @@ const PricingCard = () => {
       if (error) {
         console.log(error);
       } else {
-        console.log(data);
         setSubscription(type);
         toast.success("You are now a " + type + " subscriber");
       }
@@ -67,7 +70,7 @@ const PricingCard = () => {
 
         {/* Free Access */}
 
-        <Col lg={4} md={4} sm={10} className="mb-4">
+        <Col lg={4} md={6} sm={10} className="mb-4">
           <Card className="h-100 mb-2 px-3">
             <Card.Body>
               <div className="mb-4 custom-pricing-card">
@@ -102,7 +105,7 @@ const PricingCard = () => {
                   </li>
                 </ul>
                 <Button
-                  className="mt-4 px-5 py-2"
+                  className="mt-4 px-5 py-2 w-75"
                   onClick={() => subscripeFunction("free")}
                   disabled={subscription === "free"}
                 >
@@ -115,7 +118,7 @@ const PricingCard = () => {
 
         {/* Monthly Access */}
 
-        <Col lg={4} md={4} sm={10} className="mb-4">
+        <Col lg={4} md={6} sm={10} className="mb-4">
           <Card className="h-100 mb-2  px-3">
             <Card.Body>
               <div className="mb-4 custom-pricing-card">
@@ -151,7 +154,7 @@ const PricingCard = () => {
                 </ul>
                 <Button
                   onClick={() => subscripeFunction("monthly")}
-                  className="mt-4 px-5 py-2"
+                  className="mt-4 px-5 py-2 w-75"
                   disabled={subscription === "monthly"}
                 >
                   {subscription === "monthly" ? "Activated" : "Enroll Monthly"}
@@ -162,7 +165,7 @@ const PricingCard = () => {
         </Col>
 
         {/* Yearly Access */}
-        <Col lg={4} md={4} sm={10} className="mb-4 subscription-card">
+        <Col lg={4} md={6} sm={10} className="mb-4 subscription-card">
           <Card className="h-100 mb-2 px-3">
             <Card.Body>
               <div className="mb-4 custom-pricing-card">
@@ -197,7 +200,7 @@ const PricingCard = () => {
                   </li>
                 </ul>
                 <Button
-                  className="mt-4 px-5 py-2"
+                  className="mt-4 px-5 py-2 w-75"
                   disabled={subscription === "yearly"}
                   onClick={() => subscripeFunction("yearly")}
                 >

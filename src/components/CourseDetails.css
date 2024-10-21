@@ -1,10 +1,10 @@
 .custom-inc {
-    color: #0b74fd;
+    color: #0b74fd !important;
 }
 
 .custom-check {
-    color: green;
+    color: green !important;
 }
 .custom-cert {
-    color: orange;
+    color: orange !important;
 }

@@ -17,28 +17,20 @@ function TopCourses() {
     setTopCourses(sortedCourses);
   }, [courses]);
 
-  function formatDate(dateString) {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-GB', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-    });
-  }
-
   return (
     <Container fluid className="my-5 p-0 ">
       <div className="px-5 d-flex justify-content-between w-100">
       <h2>Top-Picked Courses</h2>
-      <Button variant="link" as={Link} to="/courses" >See more</Button>
+      <Button variant="outline-primary" className="d-flex align-items-center text-decoration-none" as={Link} to="/courses" >See more</Button>
       </div>
+      <hr />
       <Row
         xs={2}
         sm={3}
         md={3}
         lg={4}
-        style={{border:"1px solid black", borderRight:"none", borderLeft:"none"}}
-        className="m-0 p-2"
+        // style={{border:"1px solid black", borderRight:"none", borderLeft:"none"}}
+        className="m-0 mt-4 p-2"
       >
         {topCourses.map((course) => (
           <CoursesCard
@@ -53,10 +45,11 @@ function TopCourses() {
             views={course.views}
             author={course.author}
             category={course.category}
-            createdAt={formatDate(course.created_at)}
+            createdAt={course.created_at}
           />
         ))}
       </Row>
+      <hr />
     </Container>
   );
 }

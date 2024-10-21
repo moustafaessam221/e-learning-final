@@ -1,0 +1,10 @@
+.custom-slider {
+  display: block;
+  width: 100vw;
+  margin: auto;
+  max-height: 600px;
+}
+.custom-slider-image {
+  object-fit: cover;
+  max-height: 600px;
+}

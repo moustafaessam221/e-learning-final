@@ -60,7 +60,7 @@ function EnrolledCourse() {
 
     fetchCourse();
     fetchSpecificCourse();
-  }, [user, courseId, navigate]);
+  }, [user, courseId, navigate, courseComments]);
 
   const handleCheckboxChange = async (index) => {
     const newCompletedItems = [...completedItems];

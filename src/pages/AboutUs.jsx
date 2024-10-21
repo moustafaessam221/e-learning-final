@@ -8,21 +8,25 @@ const AboutUs = () => {
       name: 'Ahmed Aziz',
       role: 'Front-end Developer',
       img: 'https://via.placeholder.com/100',
+      linkedin: 'https://www.linkedin.com/in/ahmed-aziz-aa26a927b/',
     },
     {
       name: 'Alaa Saad',
       role: 'Front-end Developer',
       img: 'https://via.placeholder.com/100',
+      linkedin: 'https://www.linkedin.com/in/alaa-saad-4944921bb/',
     },
     {
       name: 'Menna Nasr',
       role: 'Front-end Developer',
       img: 'https://via.placeholder.com/100',
+      linkedin: 'https://www.linkedin.com/in/menna-nasr-/',
     },
     {
       name: 'Moustafa Essam',
       role: 'Front-end Developer',
       img: 'https://via.placeholder.com/100',
+      linkedin: 'https://www.linkedin.com/in/moustafa-essam-40b7b62b5/'
     },
     {
       name: 'Sherif Othman',
