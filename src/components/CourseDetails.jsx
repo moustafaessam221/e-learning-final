@@ -449,7 +449,7 @@ function CourseDetails() {
       </Container>
 
       {/* Comments */}
-      <Container className="mt-5">
+      <Container className="my-5">
         <h2 className="text-start mb-4">Students Reviews</h2>
         <Row className="">
           <Col className="mb-3">
