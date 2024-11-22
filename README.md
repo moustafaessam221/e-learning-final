@@ -79,3 +79,9 @@ It was developed as the final task for the **DEPI** program. The platform allows
   
 9. **Pricing Page**:
    - Shows the available packages which user can subscribe into
+
+---
+
+## **Presentation**
+
+https://docs.google.com/presentation/d/1yzLifh6ijyTxLca4NHUcCHrC3ljHUb4O/edit?usp=sharing&ouid=116126395591963718239&rtpof=true&sd=true
